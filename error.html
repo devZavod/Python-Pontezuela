@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Página no encontrada · Python Pontezuela</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde-principal: #1B5E20;
+            --verde-oscuro: #0D3B10;
+            --verde-claro: #2E7D32;
+            --verde-muy-claro: #E8F5E9;
+            --verde-suave: #C8E6C9;
+            --blanco: #FFFFFF;
+            --gris-muy-claro: #F8FAF8;
+            --gris-claro: #E8EDE8;
+            --gris-medio: #6B7B6B;
+            --gris-oscuro: #2D3B2D;
+            --negro-suave: #1A1F1A;
+            --acento-verde: #43A047;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--negro-suave);
+            background-color: var(--blanco);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== MINI HEADER ===== */
+        .topbar {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-oscuro) 100%);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+        }
+        .topbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .topbar-icon {
+            width: 32px; height: 32px;
+            background: var(--blanco);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .topbar-icon svg { width: 22px; height: 22px; }
+        .topbar-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ===== CONTENIDO CENTRAL ===== */
+        .error-page {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 24px;
+            text-align: center;
+        }
+
+        /* Bloque de código estilo terminal */
+        .terminal-block {
+            background: var(--negro-suave);
+            border-radius: 14px;
+            padding: 28px 36px;
+            margin-bottom: 40px;
+            max-width: 480px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+        }
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+        .dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+        .dot-r { background: #FF5F57; }
+        .dot-y { background: #FFBD2E; }
+        .dot-g { background: #28CA41; }
+
+        .terminal-code {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.88rem;
+            line-height: 1.8;
+        }
+        .t-comment { color: #546E7A; }
+        .t-error { color: #EF9A9A; }
+        .t-highlight { color: #A5D6A7; }
+        .t-string { color: #FFE082; }
+        .t-muted { color: #607D8B; }
+
+        /* Texto principal */
+        .error-code {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--verde-principal);
+            letter-spacing: -4px;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+        .error-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gris-oscuro);
+            margin-bottom: 12px;
+        }
+        .error-desc {
+            font-size: 0.95rem;
+            color: var(--gris-medio);
+            max-width: 420px;
+            line-height: 1.7;
+            margin-bottom: 36px;
+        }
+
+        /* Botones */
+        .error-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 28px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 16px rgba(27,94,32,0.25);
+        }
+        .btn-primary:hover {
+            background: var(--verde-oscuro);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(27,94,32,0.35);
+        }
+        .btn-primary svg { width: 18px; height: 18px; fill: currentColor; }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 28px;
+            background: transparent;
+            color: var(--verde-principal);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            border: 1.5px solid var(--gris-claro);
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover {
+            border-color: var(--verde-claro);
+            background: var(--verde-muy-claro);
+        }
+        .btn-secondary svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* ===== PIE ===== */
+        .footer {
+            background: var(--negro-suave);
+            padding: 48px 24px 32px;
+            color: var(--gris-claro);
+        }
+        .footer-content { max-width: 900px; margin: 0 auto; }
+        .footer-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .footer-about-link {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--blanco);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-about-link:hover {
+            color: var(--verde-suave);
+        }
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+        .footer-brand-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-logo-icon {
+            width: 32px; height: 32px;
+            background: var(--verde-principal);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer-logo-icon svg { width: 20px; height: 20px; }
+        .footer-logo-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--blanco);
+        }
+        .footer-year {
+            font-size: 0.85rem;
+            color: var(--gris-medio);
+            text-align: right;
+        }
+
+        @media (max-width: 480px) {
+            .error-code { font-size: 4rem; }
+            .terminal-block { padding: 20px; }
+            .error-actions { flex-direction: column; align-items: center; }
+            .footer-content { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== BARRA SUPERIOR ===== -->
+    <div class="topbar">
+        <a href="index.html" class="topbar-logo" target="_self">
+            <div class="topbar-icon">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="33" cy="9" rx="9" ry="7" fill="#1B5E20" transform="rotate(-12 33 9)"/>
+                    <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                          stroke="#1B5E20" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+            </div>
+            <span class="topbar-label"></span>
+        </a>
+    </div>
+
+    <!-- ===== CONTENIDO 404 ===== -->
+    <div class="error-page">
+
+        <div class="error-code">404</div>
+        <h1 class="error-title">Esta página no existe</h1>
+        <p class="error-desc">
+            La dirección que escribiste no corresponde a ninguna página de este sitio. Puede que haya un error en el enlace, o que la página haya sido movida.
+        </p>
+
+        <div class="error-actions">
+            <a href="index.html" class="btn-primary" target="_self">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Ir al inicio
+            </a>
+        </div>
+
+    </div>
+
+    <!-- ===== PIE ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <a href="acerca.html" class="footer-about-link">Acerca de</a>
+                <div class="footer-brand">
+                    <div class="footer-brand-top">
+                        <div class="footer-logo-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Cabeza prominente en la parte superior -->
+                                <ellipse cx="33" cy="9" rx="9" ry="7" fill="white" transform="rotate(-12 33 9)"/>
+                                <!-- Cuerpo en S descendente, cola abajo -->
+                                <path d="M32 16
+                                         C29 19, 20 23, 18 29
+                                         C16 35, 23 39, 31 41
+                                         C39 43, 45 47, 45 53
+                                         C45 58, 39 61, 34 59
+                                         C31 57, 30 54, 32 51"
+                                      stroke="white"
+                                      stroke-width="9"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      fill="none"/>
+                            </svg>
+                        </div>
+                        <span class="footer-logo-text">Python Pontezuela</span>
+                    </div>
+                    <span class="footer-year">2026</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

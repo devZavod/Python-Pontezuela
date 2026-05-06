@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de instalación — Python Pontezuela</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde-principal: #1B5E20;
+            --verde-oscuro: #0D3B10;
+            --verde-claro: #2E7D32;
+            --verde-muy-claro: #E8F5E9;
+            --verde-suave: #C8E6C9;
+            --blanco: #FFFFFF;
+            --gris-muy-claro: #F8FAF8;
+            --gris-claro: #E8EDE8;
+            --gris-medio: #6B7B6B;
+            --gris-oscuro: #2D3B2D;
+            --negro-suave: #1A1F1A;
+            --acento-verde: #43A047;
+            --naranja: #E65100;
+            --naranja-claro: #FFF3E0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--negro-suave);
+            background-color: var(--blanco);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        code, .mono {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.88em;
+            background: var(--gris-claro);
+            color: var(--verde-principal);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* ===== CABEZA ===== */
+        .header {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-oscuro) 100%);
+            padding: 80px 24px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(67,160,71,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%; left: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(67,160,71,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header-top-bar {
+            position: absolute;
+            top: 24px; left: 24px;
+            z-index: 2;
+        }
+        .header-logo-small {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .header-logo-icon {
+            width: 36px; height: 36px;
+            background: var(--blanco);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .header-logo-icon svg { width: 24px; height: 24px; }
+        .header-logo-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+        }
+        .back-link {
+            position: absolute;
+            top: 24px; right: 24px;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--blanco); }
+        .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+        .header-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.9);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 99px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--blanco);
+            letter-spacing: -1.5px;
+            position: relative;
+            z-index: 1;
+        }
+        .header-subtitle {
+            font-size: 1.05rem;
+            color: var(--verde-suave);
+            font-weight: 500;
+            margin-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== AVISO RAPIDO ===== */
+        .quick-info {
+            background: var(--verde-muy-claro);
+            border-bottom: 1px solid var(--verde-suave);
+            padding: 16px 24px;
+        }
+        .quick-info-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .quick-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--blanco);
+            border: 1px solid var(--verde-suave);
+            border-radius: 99px;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--verde-principal);
+        }
+        .quick-tag svg { width: 14px; height: 14px; fill: var(--acento-verde); }
+
+        /* ===== CONTENEDOR ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== SECCIONES ===== */
+        .section {
+            padding: 56px 0;
+            border-bottom: 1px solid var(--gris-claro);
+        }
+        .section:last-of-type { border-bottom: none; }
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--acento-verde);
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 28px;
+            letter-spacing: -0.5px;
+        }
+
+        /* ===== OPCIONES RAPIDAS ===== */
+        .opciones-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .opcion-card {
+            border-radius: 14px;
+            padding: 24px;
+            border: 2px solid transparent;
+            cursor: default;
+            transition: all 0.2s;
+        }
+        .opcion-card.recomendada {
+            background: var(--verde-muy-claro);
+            border-color: var(--verde-claro);
+        }
+        .opcion-card.alternativa {
+            background: var(--gris-muy-claro);
+            border-color: var(--gris-claro);
+        }
+        .opcion-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 3px 10px;
+            border-radius: 99px;
+            margin-bottom: 12px;
+        }
+        .opcion-badge.rec { background: var(--verde-principal); color: var(--blanco); }
+        .opcion-badge.alt { background: var(--gris-claro); color: var(--gris-medio); }
+        .opcion-titulo {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--gris-oscuro);
+            margin-bottom: 8px;
+        }
+        .opcion-desc {
+            font-size: 0.85rem;
+            color: var(--gris-medio);
+            line-height: 1.55;
+        }
+
+        /* ===== REQUISITOS ===== */
+        .req-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .req-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--gris-muy-claro);
+            border: 1px solid var(--gris-claro);
+            border-radius: 10px;
+        }
+        .req-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .req-info {}
+        .req-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--gris-medio);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .req-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gris-oscuro);
+        }
+
+        /* ===== PASOS ===== */
+        .pasos-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .paso {
+            display: flex;
+            gap: 20px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--gris-claro);
+            position: relative;
+        }
+        .paso:last-child { border-bottom: none; }
+        .paso-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            flex-shrink: 0;
+        }
+        .paso-num {
+            width: 40px; height: 40px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+        .paso-line {
+            width: 2px;
+            flex: 1;
+            background: var(--gris-claro);
+            margin-top: 8px;
+        }
+        .paso:last-child .paso-line { display: none; }
+        .paso-content { flex: 1; padding-top: 8px; }
+        .paso-titulo {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gris-oscuro);
+            margin-bottom: 10px;
+        }
+        .paso-desc {
+            font-size: 0.9rem;
+            color: var(--gris-medio);
+            line-height: 1.65;
+            margin-bottom: 12px;
+        }
+        .paso-desc:last-child { margin-bottom: 0; }
+
+        /* Bloque de código */
+        .code-block {
+            background: var(--negro-suave);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 12px 0;
+            overflow-x: auto;
+        }
+        .code-block pre {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #A5D6A7;
+            white-space: pre;
+            line-height: 1.6;
+        }
+        .code-block .comment { color: #546E7A; }
+        .code-block .keyword { color: #80CBC4; }
+        .code-block .string { color: #FFE082; }
+
+        /* Nota especial dentro de paso */
+        .paso-nota {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: var(--naranja-claro);
+            border: 1px solid #FFCC80;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 10px;
+        }
+        .paso-nota-icon { font-size: 1rem; flex-shrink: 0; }
+        .paso-nota-text {
+            font-size: 0.85rem;
+            color: #4E342E;
+            line-height: 1.55;
+        }
+
+        .paso-tip {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: var(--verde-muy-claro);
+            border: 1px solid var(--verde-suave);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 10px;
+        }
+        .paso-tip-icon { font-size: 1rem; flex-shrink: 0; }
+        .paso-tip-text {
+            font-size: 0.85rem;
+            color: var(--verde-oscuro);
+            line-height: 1.55;
+        }
+
+        /* Sub-pasos */
+        .sub-pasos {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin: 10px 0;
+        }
+        .sub-pasos li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--gris-oscuro);
+            line-height: 1.5;
+        }
+        .sub-pasos li::before {
+            content: '';
+            width: 6px; height: 6px;
+            background: var(--acento-verde);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 7px;
+        }
+
+        /* ===== VERIFICACION ===== */
+        .verificacion-block {
+            background: var(--negro-suave);
+            border-radius: 14px;
+            padding: 28px 32px;
+            margin-top: 8px;
+        }
+        .verif-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--acento-verde);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+        .verif-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.92rem;
+            color: #A5D6A7;
+            line-height: 1.8;
+        }
+        .verif-comment { color: #546E7A; }
+        .verif-output { color: #FFE082; }
+
+        /* ===== ALTERNATIVA ONLINE ===== */
+        .online-block {
+            background: linear-gradient(135deg, var(--gris-muy-claro) 0%, var(--gris-claro) 100%);
+            border: 1px solid var(--gris-claro);
+            border-radius: 14px;
+            padding: 28px 32px;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .online-info { flex: 1; min-width: 200px; }
+        .online-titulo {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gris-oscuro);
+            margin-bottom: 6px;
+        }
+        .online-desc {
+            font-size: 0.88rem;
+            color: var(--gris-medio);
+            line-height: 1.55;
+        }
+        .online-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .online-btn:hover {
+            background: var(--verde-oscuro);
+            transform: translateY(-1px);
+        }
+        .online-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+        /* ===== PROBLEMAS FRECUENTES ===== */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .faq-item {
+            border: 1px solid var(--gris-claro);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .faq-q {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: var(--gris-muy-claro);
+            cursor: pointer;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--gris-oscuro);
+            user-select: none;
+            list-style: none;
+        }
+        .faq-q::before { content: none; }
+        .faq-q::-webkit-details-marker { display: none; }
+        details[open] .faq-q { color: var(--verde-principal); }
+        .faq-q-icon {
+            width: 28px; height: 28px;
+            background: var(--naranja-claro);
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .faq-arrow {
+            margin-left: auto;
+            font-size: 1rem;
+            color: var(--gris-medio);
+            transition: transform 0.2s;
+        }
+        details[open] .faq-arrow { transform: rotate(90deg); }
+        .faq-a {
+            padding: 16px 20px;
+            background: var(--blanco);
+            font-size: 0.88rem;
+            color: var(--gris-oscuro);
+            line-height: 1.65;
+            border-top: 1px solid var(--gris-claro);
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            padding: 64px 24px;
+            text-align: center;
+            background: var(--gris-muy-claro);
+        }
+        .cta-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 8px;
+        }
+        .cta-desc {
+            font-size: 0.95rem;
+            color: var(--gris-medio);
+            margin-bottom: 24px;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 16px rgba(27,94,32,0.25);
+        }
+        .cta-btn:hover {
+            background: var(--verde-oscuro);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(27,94,32,0.35);
+        }
+        .cta-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* ===== PIE ===== */
+        .footer {
+            background: var(--negro-suave);
+            padding: 48px 24px 32px;
+            color: var(--gris-claro);
+        }
+        .footer-content { max-width: 900px; margin: 0 auto; }
+        .footer-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .footer-about-link {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--blanco);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-about-link:hover { color: var(--verde-suave); }
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+        .footer-brand-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-logo-icon {
+            width: 32px; height: 32px;
+            background: var(--verde-principal);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer-logo-icon svg { width: 20px; height: 20px; }
+        .footer-logo-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--blanco);
+        }
+        .footer-year {
+            font-size: 0.85rem;
+            color: var(--gris-medio);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .header { padding: 60px 20px 48px; }
+            .header h1 { font-size: 1.8rem; }
+            .back-link { display: none; }
+            .opciones-grid { grid-template-columns: 1fr; }
+            .section { padding: 40px 0; }
+            .req-grid { grid-template-columns: 1fr 1fr; }
+            .paso { flex-direction: column; gap: 12px; }
+            .paso-left { flex-direction: row; }
+            .paso-line { display: none; }
+            .verificacion-block { padding: 20px; }
+            .online-block { flex-direction: column; }
+            .footer-main { flex-direction: column; align-items: center; }
+            .footer-brand { align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== CABEZA ===== -->
+    <header class="header">
+        <div class="header-top-bar">
+            <a href="index.html" class="header-logo-small" target="_self">
+                <div class="header-logo-icon">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="33" cy="9" rx="9" ry="7" fill="#1B5E20" transform="rotate(-12 33 9)"/>
+                        <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                              stroke="#1B5E20" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+                <span class="header-logo-label"></span>
+            </a>
+        </div>
+        <h1>Instala Python y Thonny</h1>
+        <p class="header-subtitle">Guía paso a paso para preparar tu computadora antes de la primera clase</p>
+    </header>
+
+    <main class="container">
+
+        <!-- ===== OPCION RECOMENDADA VS ALTERNATIVA ===== -->
+        <section class="section">
+            <h2 class="section-title">Elige tu método de instalación</h2>
+            <div class="opciones-grid">
+                <div class="opcion-card recomendada">
+                    <span class="opcion-badge rec">✓ Recomendado</span>
+                    <p class="opcion-titulo">Thonny (incluye Python)</p>
+                    <p class="opcion-desc">Un solo instalador que trae Python y el editor juntos. Ideal para el taller: ligero, visual y fácil de usar desde el primer día. Sin configuración adicional.</p>
+                </div>
+                <div class="opcion-card alternativa">
+                    <span class="opcion-badge alt">Alternativa</span>
+                    <p class="opcion-titulo">Python por separado</p>
+                    <p class="opcion-desc">Instala Python 3.14 directamente desde python.org. Útil si ya tienes otro editor o quieres usar IDLE. Requiere un paso extra de verificación.</p>
+                </div>
+            </div>
+            <p style="font-size:0.88rem; color:var(--gris-medio); line-height:1.55;">
+                Si no sabes cuál elegir, instala Thonny. Es el entorno oficial del taller y toda la guía de abajo lo usa como referencia.
+            </p>
+        </section>
+
+        <!-- ===== REQUISITOS ===== -->
+        <section class="section">
+            <h2 class="section-title">Requisitos mínimos del equipo</h2>
+            <div class="req-grid">
+                <div class="req-item">
+                    <span class="req-icon"></span>
+                    <div class="req-info">
+                        <div class="req-label">Sistema operativo</div>
+                        <div class="req-value">Windows 10 o superior</div>
+                    </div>
+                </div>
+                <div class="req-item">
+                    <span class="req-icon"></span>
+                    <div class="req-info">
+                        <div class="req-label">Memoria RAM</div>
+                        <div class="req-value">1 GB mínimo (2 GB ideal)</div>
+                    </div>
+                </div>
+                <div class="req-item">
+                    <span class="req-icon"></span>
+                    <div class="req-info">
+                        <div class="req-label">Procesador</div>
+                        <div class="req-value">Intel Atom / Celeron o superior</div>
+                    </div>
+                </div>
+                <div class="req-item">
+                    <span class="req-icon"></span>
+                    <div class="req-info">
+                        <div class="req-label">Espacio en disco</div>
+                        <div class="req-value">500 MB libres</div>
+                    </div>
+                </div>
+                <div class="req-item">
+                    <span class="req-icon"></span>
+                    <div class="req-info">
+                        <div class="req-label">Internet</div>
+                        <div class="req-value">Solo para descargar (una sola vez)</div>
+                    </div>
+                </div>
+                <div class="req-item">
+                    <span class="req-icon"></span>
+                    <div class="req-info">
+                        <div class="req-label">Permisos</div>
+                        <div class="req-value">Cuenta de administrador (para instalar)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== OPCION A: THONNY ===== -->
+        <section class="section">
+            <p class="section-label">Opción recomendada</p>
+            <h2 class="section-title">Instalar Thonny (con Python incluido)</h2>
+            <div class="pasos-list">
+
+                <div class="paso">
+                    <div class="paso-left">
+                        <div class="paso-num">1</div>
+                        <div class="paso-line"></div>
+                    </div>
+                    <div class="paso-content">
+                        <p class="paso-titulo">Descargar el instalador</p>
+                        <p class="paso-desc">Abre tu navegador y ve a <strong>thonny.org</strong>. En la página principal verás un botón grande que dice <strong>"Download"</strong>. Haz clic en <strong>"Windows"</strong> para descargar el instalador <code>.exe</code>.</p>
+                        <div class="paso-tip">
+                            <span class="paso-tip-icon"></span>
+                            <p class="paso-tip-text">El archivo descargado se llamará algo como <code>thonny-4.x.x.exe</code>. Guárdalo en tu carpeta de Descargas. No necesitas descomprimir nada.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <div class="paso-left">
+                        <div class="paso-num">2</div>
+                        <div class="paso-line"></div>
+                    </div>
+                    <div class="paso-content">
+                        <p class="paso-titulo">Ejecutar el instalador</p>
+                        <p class="paso-desc">Ve a tu carpeta de <strong>Descargas</strong> y haz doble clic en el archivo <code>.exe</code>. Si Windows muestra una advertencia de seguridad, haz clic en <strong>"Más información"</strong> y luego en <strong>"Ejecutar de todas formas"</strong>.</p>
+                        <div class="paso-nota">
+                            <span class="paso-nota-icon"></span>
+                            <p class="paso-nota-text">Si el equipo es de la institución y no tienes permisos de administrador, deberás pedirle a un docente o encargado de sala que ingrese la contraseña. Thonny también ofrece una <strong>versión portable</strong> que no requiere instalación (ver más abajo).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <div class="paso-left">
+                        <div class="paso-num">3</div>
+                        <div class="paso-line"></div>
+                    </div>
+                    <div class="paso-content">
+                        <p class="paso-titulo">Seguir el asistente de instalación</p>
+                        <p class="paso-desc">El instalador es muy sencillo. Solo debes:</p>
+                        <ul class="sub-pasos">
+                            <li>Aceptar la licencia (clic en <strong>"I accept…"</strong>)</li>
+                            <li>Dejar la carpeta de instalación por defecto (no la cambies)</li>
+                            <li>Asegurarte de que la opción "Install for me only" esté seleccionada si no tienes permisos de administrador completos</li>
+                            <li>Hacer clic en <strong>"Install/Instalar"</strong> y esperar unos segundos</li>
+                            <li>Finalizar con <strong>"Finish"</strong></li>
+                        </ul>
+                        <div class="paso-tip">
+                            <span class="paso-tip-icon"></span>
+                            <p class="paso-tip-text">Thonny instala su propia versión de Python internamente. No necesitas instalar Python por separado si usas este método.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <div class="paso-left">
+                        <div class="paso-num">4</div>
+                        <div class="paso-line"></div>
+                    </div>
+                    <div class="paso-content">
+                        <p class="paso-titulo">Abrir Thonny por primera vez</p>
+                        <p class="paso-desc">Busca <strong>Thonny</strong> en el menú de inicio de Windows o haz doble clic en el acceso directo del escritorio. La primera vez puede tardar unos segundos en abrir. Verás una ventana dividida en dos partes:</p>
+                        <ul class="sub-pasos">
+                            <li><strong>Panel superior (Editor):</strong> aquí escribes tu código y lo guardas como archivo</li>
+                            <li><strong>Panel inferior (Shell / Consola):</strong> aquí aparecen los resultados al ejecutar, y puedes escribir comandos directamente</li>
+                        </ul>
+                        <div class="paso-tip">
+                            <span class="paso-tip-icon"></span>
+                            <p class="paso-tip-text">En la primera apertura Thonny puede preguntarte el idioma. Puedes seleccionar <strong>Español</strong> o dejarlo en inglés; para el taller ambas opciones funcionan igual.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <div class="paso-left">
+                        <div class="paso-num">5</div>
+                        <div class="paso-line"></div>
+                    </div>
+                    <div class="paso-content">
+                        <p class="paso-titulo">Verificar que todo funciona</p>
+                        <p class="paso-desc">En el panel inferior (Shell), escribe lo siguiente y presiona <strong>Enter</strong>:</p>
+                        <div class="code-block">
+                            <pre><span class="comment"></span>print(<span class="string">"Hola"</span>)</pre>
+                        </div>
+                        <p class="paso-desc">Si ves el texto <code>Hola</code> aparecer debajo, ¡la instalación fue exitosa! Thonny y Python están listos.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== VERIFICACION ===== -->
+        <section class="section">
+            <h2 class="section-title">Verificación de la instalación</h2>
+            <p style="font-size:0.93rem;color:var(--gris-medio);margin-bottom:20px;line-height:1.6;">
+                Puedes verificar la versión de Python instalada abriendo la Shell/Terminal de Thonny y escribiendo:
+            </p>
+            <div class="verificacion-block">
+                <div class="verif-label">Shell/Terminal de Thonny</div>
+                <div class="verif-code">
+                    <span class="verif-comment">&gt;&gt;&gt; </span>import sys<br>
+                    <span class="verif-comment">&gt;&gt;&gt; </span>print(sys.version)<br>
+                    <span class="verif-output">3.14.x (...)  <span class="verif-comment"># Deberías ver algo similar a esto</span></span><br><br>
+                    <span class="verif-comment">&gt;&gt;&gt; </span>print(2 + 2)<br>
+                    <span class="verif-output">4</span><br><br>
+                    <span class="verif-comment">&gt;&gt;&gt; </span>print(<span style="color:#FFE082;">"¡Listo para programar!"</span>)<br>
+                    <span class="verif-output">¡Listo para programar!</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== OPCION B: PYTHON SEPARADO ===== -->
+        <section class="section">
+            <h2 class="section-title">Instalar Python por separado (sin Thonny)</h2>
+            <div class="pasos-list">
+
+                <div class="paso">
+                    <div class="paso-left">
+                        <div class="paso-num">1</div>
+                        <div class="paso-line"></div>
+                    </div>
+                    <div class="paso-content">
+                        <p class="paso-titulo">Descargar Python 3.14</p>
+                        <p class="paso-desc">Ve a <strong>python.org/downloads</strong>. La página detecta automáticamente tu sistema operativo. Haz clic en el botón amarillo <strong>"Download Python 3.14.x"</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <div class="paso-left">
+                        <div class="paso-num">2</div>
+                        <div class="paso-line"></div>
+                    </div>
+                    <div class="paso-content">
+                        <p class="paso-titulo">Instalar marcando la opción importante</p>
+                        <p class="paso-desc">Ejecuta el instalador descargado. <strong>Antes de hacer clic en "Install Now"</strong>, asegúrate de marcar la opción:</p>
+                        <div class="code-block">
+                            <pre><span class="comment">☑  Add Python to PATH   ← esta opción es crítica</span></pre>
+                        </div>
+                        <div class="paso-nota">
+                            <span class="paso-nota-icon"></span>
+                            <p class="paso-nota-text">Si no marcas <strong>"Add Python to PATH"</strong>, Python no será reconocido desde la terminal y tendrás que reinstalar. Es el error más común en instalaciones nuevas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <div class="paso-left">
+                        <div class="paso-num">3</div>
+                        <div class="paso-line"></div>
+                    </div>
+                    <div class="paso-content">
+                        <p class="paso-titulo">Verificar desde la terminal</p>
+                        <p class="paso-desc">Abre el <strong>Símbolo del sistema</strong> (busca "cmd" en el menú de inicio) y escribe:</p>
+                        <div class="code-block">
+                            <pre>python --version</pre>
+                        </div>
+                        <p class="paso-desc">Deberías ver algo como <code>Python 3.14.0</code>. Si ves ese resultado, la instalación fue correcta. Luego puedes abrir el editor IDLE (incluido con Python) desde el menú de inicio.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== VERSION PORTABLE ===== -->
+        <section class="section">
+            <p class="section-label">Sin permisos de administrador</p>
+            <h2 class="section-title">¿No puedes instalar en el equipo?</h2>
+            <p style="font-size:0.93rem;color:var(--gris-medio);margin-bottom:20px;line-height:1.6;">
+                Si el computador es de la institución y no permite instalaciones, tienes dos opciones:
+            </p>
+
+            <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:8px;">
+                <div style="padding:22px;background:var(--verde-muy-claro);border:1px solid var(--verde-suave);border-radius:12px;">
+                    <p style="font-size:0.95rem;font-weight:700;color:var(--verde-oscuro);margin-bottom:8px;">Opción 1 — Thonny Portable</p>
+                    <p style="font-size:0.88rem;color:var(--verde-oscuro);line-height:1.6;margin-bottom:12px;">
+                        Desde <strong>thonny.org</strong> también puedes descargar la versión <strong>"portable"</strong> de Thonny. Es un archivo <code>.zip</code> que no requiere instalación: solo descomprimes y ejecutas el <code>.exe</code> directamente desde una carpeta o desde una memoria USB. Funciona igual que la versión instalada.
+                    </p>
+                    <a href="https://thonny.org/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:600;color:var(--verde-principal);text-decoration:none;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                        Ir a thonny.org para descargar la versión portable
+                    </a>
+                </div>
+
+                <div class="online-block">
+                    <div class="online-info">
+                        <p class="online-titulo">Opción 2 — OnlineGDB (sin instalar nada)</p>
+                        <p class="online-desc">Compilador de Python gratuito que funciona directamente en el navegador. No requiere cuenta, no requiere instalación. Perfecto para la primera clase o para practicar desde casa.</p>
+                    </div>
+                    <a href="https://www.onlinegdb.com/online_python_compiler" target="_blank" rel="noopener" class="online-btn">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        Usar OnlineGDB
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PROBLEMAS FRECUENTES ===== -->
+        <section class="section">
+            <h2 class="section-title">Problemas frecuentes y soluciones</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary class="faq-q">
+                        <span class="faq-q-icon">
+                            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="6" fill="red" /></svg>
+                        </span>
+                        Thonny abre pero no ejecuta el código (no aparece nada en la consola)
+                        <span class="faq-arrow">›</span>
+                    </summary>
+                    <div class="faq-a">
+                        Asegúrate de presionar el botón verde ▶ <strong>"Run"</strong> (o la tecla <strong>F5</strong>) con el cursor dentro del editor, no en la consola. Si el archivo no tiene nombre aún, Thonny te pedirá guardarlo primero; guárdalo con extensión <code>.py</code>.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-q">
+                        <span class="faq-q-icon">
+                            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="6" fill="red" /></svg>
+                        </span>
+                        Windows dice "Python no se reconoce como comando" en la terminal
+                        <span class="faq-arrow">›</span>
+                    </summary>
+                    <div class="faq-a">
+                        Esto ocurre cuando se instaló Python <strong>sin marcar</strong> la opción "Add Python to PATH". La solución más rápida es desinstalar Python desde el Panel de Control y reinstalarlo <strong>asegurándote de marcar esa casilla</strong>. Si usas Thonny, este problema no ocurre.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-q">
+                        <span class="faq-q-icon">
+                            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="6" fill="red" /></svg>
+                        </span>
+                        El instalador de Thonny dice "acceso denegado" o pide contraseña
+                        <span class="faq-arrow">›</span>
+                    </summary>
+                    <div class="faq-a">
+                        El equipo requiere permisos de administrador para instalar programas. Tienes dos opciones: pedirle a un adulto o encargado que ingrese la contraseña, o usar la <strong>versión portable de Thonny</strong> (un .zip que no requiere instalación) o el compilador <strong>OnlineGDB</strong> en el navegador.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-q">
+                        <span class="faq-q-icon">
+                            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="6" fill="red" /></svg>
+                        </span>
+                        Thonny tarda mucho en abrir o se congela
+                        <span class="faq-arrow">›</span>
+                    </summary>
+                    <div class="faq-a">
+                        En equipos con poca RAM, la primera apertura puede tardar varios segundos. Si se congela por más de 5 minutos, ciérralo y vuelve a abrir. Si el problema persiste, intenta usar <strong>IDLE</strong> (ya instalado con Python, más ligero) o <strong>OnlineGDB</strong>.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-q">
+                        <span class="faq-q-icon">
+                            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="6" fill="red" /></svg>
+                        </span>
+                        Aparece un error con texto en rojo al ejecutar mi código
+                        <span class="faq-arrow">›</span>
+                    </summary>
+                    <div class="faq-a">
+                        ¡Eso es normal y bienvenido! Los errores en rojo son los mensajes de Python explicando qué salió mal. Busca la última línea del error (la que empieza con el nombre del error, como <code>SyntaxError</code> o <code>NameError</code>): ahí está la pista. En el taller aprenderemos a leerlos juntos.
+                    </div>
+                </details>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta-section">
+        <p class="cta-title">¿Todo instalado? ¡Ya puedes seguir a las sesiones!</p>
+        <p class="cta-desc">Entra a la página principal del taller para ver las clases disponibles.</p>
+        <a href="index.html" class="cta-btn" target="_self">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            Ir a inicio
+        </a>
+    </section>
+
+    <!-- ===== PIE ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <a href="acerca.html" class="footer-about-link" target="_self">Acerca de</a>
+                <div class="footer-brand">
+                    <div class="footer-brand-top">
+                        <div class="footer-logo-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <ellipse cx="33" cy="9" rx="9" ry="7" fill="white" transform="rotate(-12 33 9)"/>
+                                <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                                      stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            </svg>
+                        </div>
+                        <span class="footer-logo-text">Python Pontezuela</span>
+                    </div>
+                    <span class="footer-year">2026</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

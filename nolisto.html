@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Próximamente — Python Pontezuela</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde-principal: #1B5E20;
+            --verde-oscuro: #0D3B10;
+            --verde-claro: #2E7D32;
+            --verde-muy-claro: #E8F5E9;
+            --verde-suave: #C8E6C9;
+            --blanco: #FFFFFF;
+            --gris-muy-claro: #F8FAF8;
+            --gris-claro: #E8EDE8;
+            --gris-medio: #6B7B6B;
+            --gris-oscuro: #2D3B2D;
+            --negro-suave: #1A1F1A;
+            --acento-verde: #43A047;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--negro-suave);
+            background-color: var(--blanco);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== MINI HEADER ===== */
+        .topbar {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-oscuro) 100%);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+        }
+        .topbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .topbar-icon {
+            width: 32px; height: 32px;
+            background: var(--blanco);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .topbar-icon svg { width: 22px; height: 22px; }
+        .topbar-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ===== CONTENIDO CENTRAL ===== */
+        .nolist-page {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 24px;
+            text-align: center;
+        }
+
+        /* Ícono animado */
+        .nolist-icon-wrap {
+            position: relative;
+            width: 96px; height: 96px;
+            margin: 0 auto 36px;
+        }
+        .nolist-icon-bg {
+            width: 96px; height: 96px;
+            background: var(--verde-muy-claro);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--verde-suave);
+            animation: pulse-soft 3s ease-in-out infinite;
+        }
+        .nolist-icon-bg svg {
+            width: 48px; height: 48px;
+            fill: var(--verde-principal);
+        }
+        @keyframes pulse-soft {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(67,160,71,0.15); }
+            50% { box-shadow: 0 0 0 12px rgba(67,160,71,0); }
+        }
+
+        /* Badge de estado */
+        .nolist-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gris-muy-claro);
+            border: 1px solid var(--gris-claro);
+            border-radius: 99px;
+            padding: 6px 16px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--gris-medio);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 24px;
+        }
+        .nolist-badge-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--acento-verde);
+            animation: blink 1.8s ease-in-out infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Título y descripción */
+        .nolist-title {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: var(--gris-oscuro);
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+        .nolist-desc {
+            font-size: 0.97rem;
+            color: var(--gris-medio);
+            max-width: 440px;
+            line-height: 1.75;
+            margin-bottom: 40px;
+        }
+
+        /* Bloque de info contextual */
+        .nolist-info {
+            background: var(--gris-muy-claro);
+            border: 1px solid var(--gris-claro);
+            border-radius: 14px;
+            padding: 24px 28px;
+            max-width: 480px;
+            width: 100%;
+            margin-bottom: 36px;
+            text-align: left;
+        }
+        .nolist-info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gris-claro);
+        }
+        .nolist-info-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .nolist-info-row:first-child { padding-top: 0; }
+        .nolist-info-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            width: 28px;
+            text-align: center;
+        }
+        .nolist-info-text {
+            font-size: 0.88rem;
+            color: var(--gris-oscuro);
+            line-height: 1.5;
+        }
+        .nolist-info-text strong {
+            color: var(--verde-principal);
+        }
+
+        /* Barra de progreso decorativa */
+        .progress-wrap {
+            max-width: 480px;
+            width: 100%;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .progress-text {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--gris-medio);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .progress-pct {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--acento-verde);
+        }
+        .progress-bar-bg {
+            height: 6px;
+            background: var(--gris-claro);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--verde-claro), var(--acento-verde));
+            border-radius: 99px;
+            width: 0;
+            animation: fill-bar 2s ease-out 0.5s forwards;
+        }
+        @keyframes fill-bar {
+            to { width: var(--target-width, 30%); }
+        }
+
+        /* Botones */
+        .nolist-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 28px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 16px rgba(27,94,32,0.25);
+        }
+        .btn-primary:hover {
+            background: var(--verde-oscuro);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(27,94,32,0.35);
+        }
+        .btn-primary svg { width: 18px; height: 18px; fill: currentColor; }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 28px;
+            background: transparent;
+            color: var(--verde-principal);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            border: 1.5px solid var(--gris-claro);
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover {
+            border-color: var(--verde-claro);
+            background: var(--verde-muy-claro);
+        }
+        .btn-secondary svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* ===== PIE ===== */
+        .footer {
+            background: var(--negro-suave);
+            padding: 28px 24px;
+            color: var(--gris-claro);
+        }
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-about-link {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--blanco);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-about-link:hover { color: var(--verde-suave); }
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-logo-icon {
+            width: 28px; height: 28px;
+            background: var(--verde-principal);
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer-logo-icon svg { width: 18px; height: 18px; }
+        .footer-logo-text {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--blanco);
+        }
+
+        @media (max-width: 480px) {
+            .nolist-title { font-size: 1.5rem; }
+            .nolist-actions { flex-direction: column; align-items: center; }
+            .footer-content { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== BARRA SUPERIOR ===== -->
+    <div class="topbar">
+        <a href="index.html" class="topbar-logo" target="_self">
+            <div class="topbar-icon">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="33" cy="9" rx="9" ry="7" fill="#1B5E20" transform="rotate(-12 33 9)"/>
+                    <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                          stroke="#1B5E20" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+            </div>
+            <span class="topbar-label">Python Pontezuela</span>
+        </a>
+    </div>
+
+    <!-- ===== CONTENIDO ===== -->
+    <div class="nolist-page">
+
+        <!-- Ícono animado -->
+        <div class="nolist-icon-wrap">
+            <div class="nolist-icon-bg">
+                <svg viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+                </svg>
+            </div>
+        </div>
+
+        <h1 class="nolist-title">Esta sesión aún no está lista</h1>
+        <p class="nolist-desc">
+            Esta parte del taller existe y está planificada, pero todavía no se ha publicado. Cuando se imparta, aparecerá aquí.
+        </p>
+
+        <!-- Acciones -->
+        <div class="nolist-actions">
+            <a href="index.html" class="btn-primary" target="_self">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Ir a inicio
+            </a>
+            <a href="instalacion.html" class="btn-secondary" target="_self">
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                Instalar herramientas
+            </a>
+        </div>
+
+    </div>
+
+    <!-- ===== PIE ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="acerca.html" class="footer-about-link" target="_self">Acerca de</a>
+            <div class="footer-brand">
+                <div class="footer-logo-icon">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="33" cy="9" rx="9" ry="7" fill="white" transform="rotate(-12 33 9)"/>
+                        <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                              stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+                <span class="footer-logo-text">Python Pontezuela · 2026</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
