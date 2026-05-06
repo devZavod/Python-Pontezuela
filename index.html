@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Pontezuela</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde-principal: #1B5E20;
+            --verde-oscuro: #0D3B10;
+            --verde-claro: #2E7D32;
+            --verde-muy-claro: #E8F5E9;
+            --verde-suave: #C8E6C9;
+            --blanco: #FFFFFF;
+            --gris-muy-claro: #F8FAF8;
+            --gris-claro: #E8EDE8;
+            --gris-medio: #6B7B6B;
+            --gris-oscuro: #2D3B2D;
+            --negro-suave: #1A1F1A;
+            --acento-verde: #43A047;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--negro-suave);
+            background-color: var(--blanco);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== CABEZA ===== */
+        .header {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-oscuro) 100%);
+            padding: 80px 24px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(67, 160, 71, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(67, 160, 71, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-top-bar {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            z-index: 2;
+        }
+
+        .header-logo-small {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--blanco);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-logo-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--blanco);
+            letter-spacing: -1.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-subtitle {
+            font-size: 1.15rem;
+            color: var(--verde-suave);
+            font-weight: 500;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-description {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 400;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== SECCIONES ===== */
+        .section {
+            padding: 56px 0;
+            border-bottom: 1px solid var(--gris-claro);
+        }
+
+        .section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 32px;
+            letter-spacing: -0.5px;
+        }
+
+        /* ===== BLOQUE DESCRIPTIVO ===== */
+        .info-block {
+            background: var(--gris-muy-claro);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--gris-claro);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--verde-principal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            color: var(--gris-oscuro);
+            font-weight: 500;
+        }
+
+        /* ===== LISTADO DE SESIONES ===== */
+        .sessions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .session-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 24px;
+            background: var(--blanco);
+            border: 1px solid var(--gris-claro);
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .session-item:hover {
+            border-color: var(--verde-claro);
+            background: var(--verde-muy-claro);
+            transform: translateX(4px);
+        }
+
+        .session-number {
+            width: 40px;
+            height: 40px;
+            background: var(--verde-muy-claro);
+            color: var(--verde-principal);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .session-item:hover .session-number {
+            background: var(--verde-principal);
+            color: var(--blanco);
+        }
+
+        .session-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--gris-oscuro);
+        }
+
+        .session-arrow {
+            margin-left: auto;
+            color: var(--gris-medio);
+            font-size: 1.2rem;
+            transition: transform 0.25s ease;
+        }
+
+        .session-item:hover .session-arrow {
+            transform: translateX(4px);
+            color: var(--verde-principal);
+        }
+
+        /* ===== BLOQUE DE HERRAMIENTAS ===== */
+        .tools-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .tool-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+            background: var(--blanco);
+            border: 1px solid var(--gris-claro);
+            border-radius: 12px;
+            transition: all 0.25s ease;
+        }
+
+        .tool-card:hover {
+            border-color: var(--verde-claro);
+            box-shadow: 0 4px 20px rgba(27, 94, 32, 0.08);
+        }
+
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--verde-muy-claro);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .tool-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--verde-principal);
+        }
+
+        .tool-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tool-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gris-oscuro);
+        }
+
+        .tool-desc {
+            font-size: 0.85rem;
+            color: var(--gris-medio);
+            line-height: 1.5;
+        }
+
+        .tool-btn {
+            padding: 10px 20px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .tool-btn:hover {
+            background: var(--verde-oscuro);
+            transform: translateY(-1px);
+        }
+
+        /* ===== BLOQUE DE RECURSOS ===== */
+        .resources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .resource-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 24px;
+            background: var(--blanco);
+            border: 1px solid var(--gris-claro);
+            border-radius: 12px;
+            transition: all 0.25s ease;
+        }
+
+        .resource-card:hover {
+            border-color: var(--verde-claro);
+            box-shadow: 0 4px 20px rgba(27, 94, 32, 0.08);
+        }
+
+        .resource-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--verde-muy-claro);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .resource-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--verde-principal);
+        }
+
+        .resource-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .resource-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gris-oscuro);
+        }
+
+        .resource-desc {
+            font-size: 0.85rem;
+            color: var(--gris-medio);
+            line-height: 1.5;
+        }
+
+        .resource-meta {
+            font-size: 0.8rem;
+            color: var(--verde-claro);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .resource-btn {
+            padding: 10px 20px;
+            background: transparent;
+            color: var(--verde-principal);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1.5px solid var(--verde-principal);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            white-space: nowrap;
+            margin-top: 4px;
+        }
+
+        .resource-btn:hover {
+            background: var(--verde-principal);
+            color: var(--blanco);
+        }
+
+        /* ===== ACCESO AL ARCHIVO ===== */
+        .archive-section {
+            background: linear-gradient(135deg, var(--verde-muy-claro) 0%, var(--verde-suave) 100%);
+            border-radius: 16px;
+            padding: 40px 32px;
+            text-align: center;
+            border: 1px solid var(--verde-suave);
+        }
+
+        .archive-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--blanco);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 16px rgba(27, 94, 32, 0.1);
+        }
+
+        .archive-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--verde-principal);
+        }
+
+        .archive-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 8px;
+        }
+
+        .archive-desc {
+            font-size: 0.95rem;
+            color: var(--gris-oscuro);
+            margin-bottom: 24px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .archive-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 16px rgba(27, 94, 32, 0.25);
+        }
+
+        .archive-btn:hover {
+            background: var(--verde-oscuro);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(27, 94, 32, 0.35);
+        }
+
+        /* ===== MENSAJE MOTIVADOR ===== */
+        .quote-section {
+            padding: 80px 24px;
+            text-align: center;
+            background: var(--gris-muy-claro);
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--verde-principal);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .quote-line {
+            width: 60px;
+            height: 3px;
+            background: var(--verde-principal);
+            margin: 24px auto;
+            border-radius: 2px;
+        }
+
+        /* ===== PIE ===== */
+        .footer {
+            background: var(--negro-suave);
+            padding: 48px 24px 32px;
+            color: var(--gris-claro);
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .footer-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-about-link {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--blanco);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-about-link:hover {
+            color: var(--verde-suave);
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .footer-brand-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--verde-principal);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .footer-logo-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--blanco);
+        }
+
+        .footer-year {
+            font-size: 0.85rem;
+            color: var(--gris-medio);
+            text-align: right;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 24px 0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .header {
+                padding: 60px 20px 48px;
+            }
+
+            .header-top-bar {
+                top: 16px;
+                left: 16px;
+            }
+
+            .header-logo-icon {
+                width: 30px;
+                height: 30px;
+            }
+
+            .header-logo-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header-subtitle {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 40px 0;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .tool-card,
+            .resource-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .tool-btn,
+            .resource-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .quote-text {
+                font-size: 1.1rem;
+            }
+
+            .footer-main {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-brand {
+                align-items: center;
+            }
+
+            .footer-year {
+                text-align: center;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- ===== CABEZA ===== -->
+    <header class="header">
+        <div class="header-top-bar">
+            <div class="header-logo-small">
+                <div class="header-logo-icon">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Cabeza prominente en la parte superior -->
+                        <ellipse cx="33" cy="9" rx="9" ry="7" fill="#1B5E20" transform="rotate(-12 33 9)"/>
+                        <!-- Cuerpo en S descendente, cola abajo -->
+                        <path d="M32 16
+                                 C29 19, 20 23, 18 29
+                                 C16 35, 23 39, 31 41
+                                 C39 43, 45 47, 45 53
+                                 C45 58, 39 61, 34 59
+                                 C31 57, 30 54, 32 51"
+                              stroke="#1B5E20"
+                              stroke-width="9"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              fill="none"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <h1>Python Pontezuela</h1>
+        <p class="header-subtitle">Institucion Educativa de Pontezuela</p>
+        <p class="header-description">
+            Aprende a programar desde cero con Python. Aqui encontraras cada clase, los ejercicios y las herramientas que necesitas para empezar.
+        </p>
+    </header>
+
+    <main class="container">
+
+        <!-- ===== IDENTIFICACION DEL ESPACIO FORMATIVO ===== -->
+        <section class="section">
+            <h2 class="section-title">Informacion del taller</h2>
+            <div class="info-block">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Inicio</span>
+                        <span class="info-value">Viernes 8 de mayo de 2026</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Horario</span>
+                        <span class="info-value">Viernes, 1:00 p.m.</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Intensidad</span>
+                        <span class="info-value">1 sesion semanal de 1 hora</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Modalidad</span>
+                        <span class="info-value">Presencial, taller practico</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Area</span>
+                        <span class="info-value">Informatica / Programacion</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Publico</span>
+                        <span class="info-value">Estudiantes de secundaria (grados 9 a 11)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LISTADO DE SESIONES ===== -->
+        <section class="section">
+            <h2 class="section-title">Sesiones</h2>
+            <div class="sessions-list">
+                <a href="sesion-01.html" class="session-item">
+                    <span class="session-number">01</span>
+                    <span class="session-text">Pensamiento computacional sin computadora</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+                <a href="sesion-02.html" class="session-item">
+                    <span class="session-number">02</span>
+                    <span class="session-text">Introduccion a Python</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+                <a href="sesion-03.html" class="session-item">
+                    <span class="session-number">03</span>
+                    <span class="session-text">Variables y tipos de datos</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+                <a href="sesion-04.html" class="session-item">
+                    <span class="session-number">04</span>
+                    <span class="session-text">Condicionales</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+                <a href="sesion-05.html" class="session-item">
+                    <span class="session-number">05</span>
+                    <span class="session-text">Repeticiones con while</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+                <a href="sesion-06.html" class="session-item">
+                    <span class="session-number">06</span>
+                    <span class="session-text">Recorrer secuencias con for</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+                <a href="sesion-07.html" class="session-item">
+                    <span class="session-number">07</span>
+                    <span class="session-text">Listas</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+                <a href="sesion-08.html" class="session-item">
+                    <span class="session-number">08</span>
+                    <span class="session-text">Funciones</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+                <a href="sesion-09.html" class="session-item">
+                    <span class="session-number">09</span>
+                    <span class="session-text">Proyecto integrador: definicion</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+                <a href="sesion-10.html" class="session-item">
+                    <span class="session-number">10</span>
+                    <span class="session-text">Proyecto integrador: desarrollo</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+                <a href="sesion-11.html" class="session-item">
+                    <span class="session-number">11</span>
+                    <span class="session-text">Muestra de proyectos y cierre</span>
+                    <span class="session-arrow">&#8250;</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== BLOQUE DE HERRAMIENTAS ===== -->
+        <section class="section">
+            <h2 class="section-title">Herramientas</h2>
+            <div class="tools-list">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="tool-content">
+                        <span class="tool-name">Thonny</span>
+                        <span class="tool-desc">Editor ligero para aprender Python. Trae Python incluido, depurador paso a paso y poco consumo de recursos.</span>
+                    </div>
+                    <a href="https://thonny.org/" target="_blank" rel="noopener" class="tool-btn">Descargar</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="tool-content">
+                        <span class="tool-name">Python</span>
+                        <span class="tool-desc">Lenguaje de programacion del taller. Version 3.14. Se instala junto a Thonny o por separado.</span>
+                    </div>
+                    <a href="https://www.python.org/downloads/" target="_blank" rel="noopener" class="tool-btn">Descargar</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="tool-content">
+                        <span class="tool-name">OnlineGDB</span>
+                        <span class="tool-desc">Compilador online. Escribe y ejecuta codigo desde el navegador sin instalar nada.</span>
+                    </div>
+                    <a href="https://www.onlinegdb.com/online_python_compiler" target="_blank" rel="noopener" class="tool-btn">Usar en linea</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="tool-content">
+                        <span class="tool-name">Guia de instalacion</span>
+                        <span class="tool-desc">Pasos detallados para instalar Thonny y Python en tu computadora de casa.</span>
+                    </div>
+                    <a href="instalacion.html" class="tool-btn">Ver guia</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BLOQUE DE RECURSOS ===== -->
+        <section class="section">
+            <h2 class="section-title">Recursos</h2>
+            <div class="resources-list">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="resource-content">
+                        <span class="resource-name">Python para todos</span>
+                        <span class="resource-desc">Tutorial completo de Python: tipos, control de flujo, funciones, modulos y mas. Ideal para quienes empiezan.</span>
+                        <span class="resource-meta">Autor: Raul Gonzalez Duque | 160 paginas | PDF gratuito</span>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1AR21F_OZhu-WZo3g0QsOuVKjIJcCk9SI/view" target="_blank" rel="noopener" class="resource-btn">Descargar</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="resource-content">
+                        <span class="resource-name">El tutorial de Python</span>
+                        <span class="resource-desc">Guia oficial del lenguaje en espanol. Desde lo basico hasta temas avanzados.</span>
+                        <span class="resource-meta">Python Software Foundation | Version 3.14</span>
+                    </div>
+                    <a href="https://docs.python.org/es/3/tutorial/" target="_blank" rel="noopener" class="resource-btn">Acceder</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="resource-content">
+                        <span class="resource-name">Documentacion oficial de Python</span>
+                        <span class="resource-desc">Referencia completa del lenguaje: especificacion, biblioteca estandar e instalacion.</span>
+                        <span class="resource-meta">Python Software Foundation | Version 3.14</span>
+                    </div>
+                    <a href="https://docs.python.org/es/3/" target="_blank" rel="noopener" class="resource-btn">Acceder</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ACCESO AL ARCHIVO ===== -->
+        <section class="section">
+            <div class="archive-section">
+                <div class="archive-icon">
+                    <svg viewBox="0 0 24 24" fill="#1B5E20"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                </div>
+                <h3 class="archive-title">Archivo de clases</h3>
+                <p class="archive-desc">
+                    Guiones, ejercicios y materiales de cada sesion organizados por semana. Disponibles en formato PDF para consulta y descarga.
+                </p>
+                <a href="https://drive.google.com/drive/folders/1ji4Ozty2fwRJuHJopbilKoZKChnya_6H?usp=sharing" class="archive-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    Ver materiales
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== MENSAJE MOTIVADOR ===== -->
+    <section class="quote-section">
+        <p class="quote-text">
+            Cada programa que escribes es una herramienta que construyes para resolver un problema. La programacion no es solo codigo: es pensar con claridad, actuar con logica y crear con proposito.
+        </p>
+        <div class="quote-line"></div>
+    </section>
+
+    <!-- ===== PIE ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <a href="acerca.html" class="footer-about-link">Acerca de</a>
+                <div class="footer-brand">
+                    <div class="footer-brand-top">
+                        <div class="footer-logo-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Cabeza prominente en la parte superior -->
+                                <ellipse cx="33" cy="9" rx="9" ry="7" fill="white" transform="rotate(-12 33 9)"/>
+                                <!-- Cuerpo en S descendente, cola abajo -->
+                                <path d="M32 16
+                                         C29 19, 20 23, 18 29
+                                         C16 35, 23 39, 31 41
+                                         C39 43, 45 47, 45 53
+                                         C45 58, 39 61, 34 59
+                                         C31 57, 30 54, 32 51"
+                                      stroke="white"
+                                      stroke-width="9"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      fill="none"/>
+                            </svg>
+                        </div>
+                        <span class="footer-logo-text">Python Pontezuela</span>
+                    </div>
+                    <span class="footer-year">2026</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
