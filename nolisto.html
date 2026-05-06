@@ -269,53 +269,101 @@
         }
         .btn-secondary svg { width: 18px; height: 18px; fill: currentColor; }
 
+        
         /* ===== PIE ===== */
         .footer {
             background: var(--negro-suave);
-            padding: 28px 24px;
+            padding: 48px 24px 32px;
             color: var(--gris-claro);
         }
+
         .footer-content {
             max-width: 900px;
             margin: 0 auto;
+        }
+
+        .footer-main {
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 24px;
         }
+
         .footer-about-link {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--blanco);
             text-decoration: none;
             transition: color 0.2s;
         }
-        .footer-about-link:hover { color: var(--verde-suave); }
+
+        .footer-about-link:hover {
+            color: var(--verde-suave);
+        }
+
         .footer-brand {
             display: flex;
-            align-items: center;
-            gap: 8px;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
         }
+
+        .footer-brand-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .footer-logo-icon {
-            width: 28px; height: 28px;
+            width: 32px;
+            height: 32px;
             background: var(--verde-principal);
-            border-radius: 7px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .footer-logo-icon svg { width: 18px; height: 18px; }
+
+        .footer-logo-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
         .footer-logo-text {
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--blanco);
+        }
+
+        .footer-year {
+            font-size: 0.85rem;
+            color: var(--gris-medio);
+            text-align: right;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 24px 0;
         }
 
         @media (max-width: 480px) {
             .nolist-title { font-size: 1.5rem; }
             .nolist-actions { flex-direction: column; align-items: center; }
-            .footer-content { flex-direction: column; align-items: center; }
+            .footer-main {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-brand {
+                align-items: center;
+            }
+
+            .footer-year {
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -365,20 +413,25 @@
         </div>
 
     </div>
-
+    
     <!-- ===== PIE ===== -->
     <footer class="footer">
         <div class="footer-content">
-            <a href="acerca.html" class="footer-about-link" target="_self">Acerca de</a>
-            <div class="footer-brand">
-                <div class="footer-logo-icon">
-                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <ellipse cx="33" cy="9" rx="9" ry="7" fill="white" transform="rotate(-12 33 9)"/>
-                        <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
-                              stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    </svg>
+            <div class="footer-main">
+                <a href="acerca.html" class="footer-about-link" target="_self">Acerca de</a>
+                <div class="footer-brand">
+                    <div class="footer-brand-top">
+                        <div class="footer-logo-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <ellipse cx="33" cy="9" rx="9" ry="7" fill="white" transform="rotate(-12 33 9)"/>
+                                <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                                      stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            </svg>
+                        </div>
+                        <span class="footer-logo-text">Python Pontezuela</span>
+                    </div>
+                    <span class="footer-year">2026</span>
                 </div>
-                <span class="footer-logo-text">Python Pontezuela · 2026</span>
             </div>
         </div>
     </footer>
