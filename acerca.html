@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Próximamente — Python Pontezuela</title>
+    <title>Acerca del Taller — Python Pontezuela</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --verde-principal: #1B5E20;
@@ -31,257 +31,447 @@
             background-color: var(--blanco);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* ===== MINI HEADER ===== */
-        .topbar {
+        /* ===== CABEZA ===== */
+        .header {
             background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-oscuro) 100%);
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
+            padding: 80px 24px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        .topbar-logo {
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(67,160,71,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%; left: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(67,160,71,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-top-bar {
+            position: absolute;
+            top: 24px; left: 24px;
+            z-index: 2;
+        }
+        .header-logo-small {
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
         }
-        .topbar-icon {
-            width: 32px; height: 32px;
+        .header-logo-icon {
+            width: 36px; height: 36px;
             background: var(--blanco);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .header-logo-icon svg { width: 24px; height: 24px; }
+
+        .header-logo-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 0.3px;
+        }
+
+        /* Breadcrumb back link */
+        .back-link {
+            position: absolute;
+            top: 24px; right: 24px;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--blanco); }
+        .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.9);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 99px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--blanco);
+            letter-spacing: -1.5px;
+            position: relative;
+            z-index: 1;
+        }
+        .header-subtitle {
+            font-size: 1.1rem;
+            color: var(--verde-suave);
+            font-weight: 500;
+            margin-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== SECCIONES ===== */
+        .section {
+            padding: 56px 0;
+            border-bottom: 1px solid var(--gris-claro);
+        }
+        .section:last-of-type { border-bottom: none; }
+
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--acento-verde);
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 28px;
+            letter-spacing: -0.5px;
+        }
+
+        /* ===== DESCRIPCION ===== */
+        .description-text {
+            font-size: 1rem;
+            color: var(--gris-oscuro);
+            line-height: 1.8;
+            max-width: 720px;
+        }
+        .description-text + .description-text {
+            margin-top: 16px;
+        }
+
+        /* ===== FICHA TECNICA ===== */
+        .ficha-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 8px;
+        }
+        .ficha-item {
+            background: var(--gris-muy-claro);
+            border: 1px solid var(--gris-claro);
+            border-radius: 12px;
+            padding: 20px 22px;
+        }
+        .ficha-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .ficha-value {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--gris-oscuro);
+        }
+
+        /* ===== OBJETIVO ===== */
+        .objetivo-block {
+            background: linear-gradient(135deg, var(--verde-muy-claro) 0%, var(--verde-suave) 100%);
+            border: 1px solid var(--verde-suave);
+            border-radius: 16px;
+            padding: 32px 36px;
+        }
+        .objetivo-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--verde-oscuro);
+            line-height: 1.75;
+        }
+
+        /* ===== OBJETIVOS ESPECIFICOS ===== */
+        .objetivos-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .objetivo-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 18px 22px;
+            background: var(--blanco);
+            border: 1px solid var(--gris-claro);
+            border-radius: 12px;
+        }
+        .objetivo-num {
+            width: 32px; height: 32px;
+            background: var(--verde-muy-claro);
+            color: var(--verde-principal);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-        .topbar-icon svg { width: 22px; height: 22px; }
-        .topbar-label {
-            font-size: 0.9rem;
+            font-size: 0.82rem;
             font-weight: 700;
-            color: rgba(255,255,255,0.9);
+            flex-shrink: 0;
+        }
+        .objetivo-desc {
+            font-size: 0.95rem;
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+            padding-top: 5px;
         }
 
-        /* ===== CONTENIDO CENTRAL ===== */
-        .nolist-page {
-            flex: 1;
+        /* ===== METODOLOGIA ===== */
+        .metodo-list {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 64px 24px;
-            text-align: center;
+            gap: 20px;
         }
-
-        /* Ícono animado */
-        .nolist-icon-wrap {
-            position: relative;
-            width: 96px; height: 96px;
-            margin: 0 auto 36px;
+        .metodo-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
         }
-        .nolist-icon-bg {
-            width: 96px; height: 96px;
+        .metodo-icon {
+            width: 44px; height: 44px;
             background: var(--verde-muy-claro);
-            border-radius: 24px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid var(--verde-suave);
-            animation: pulse-soft 3s ease-in-out infinite;
+            flex-shrink: 0;
         }
-        .nolist-icon-bg svg {
-            width: 48px; height: 48px;
+        .metodo-icon svg {
+            width: 22px; height: 22px;
             fill: var(--verde-principal);
         }
-        @keyframes pulse-soft {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(67,160,71,0.15); }
-            50% { box-shadow: 0 0 0 12px rgba(67,160,71,0); }
+        .metodo-content { flex: 1; }
+        .metodo-titulo {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--gris-oscuro);
+            margin-bottom: 4px;
+        }
+        .metodo-desc {
+            font-size: 0.88rem;
+            color: var(--gris-medio);
+            line-height: 1.55;
         }
 
-        /* Badge de estado */
-        .nolist-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--gris-muy-claro);
-            border: 1px solid var(--gris-claro);
-            border-radius: 99px;
-            padding: 6px 16px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--gris-medio);
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 24px;
+        /* ===== RESULTADOS DE APRENDIZAJE ===== */
+        .ra-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        .nolist-badge-dot {
-            width: 7px; height: 7px;
+        .ra-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 20px;
+            background: var(--blanco);
+            border: 1px solid var(--gris-claro);
+            border-left: 3px solid var(--verde-principal);
+            border-radius: 0 10px 10px 0;
+        }
+        .ra-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--verde-principal);
+            background: var(--verde-muy-claro);
+            padding: 3px 8px;
+            border-radius: 5px;
+            flex-shrink: 0;
+            margin-top: 1px;
+            letter-spacing: 0.5px;
+        }
+        .ra-desc {
+            font-size: 0.92rem;
+            color: var(--gris-oscuro);
+            line-height: 1.55;
+        }
+
+        /* ===== ENTORNO TECNOLOGICO ===== */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .tech-card {
+            background: var(--blanco);
+            border: 1px solid var(--gris-claro);
+            border-radius: 12px;
+            padding: 22px 24px;
+            transition: all 0.25s ease;
+        }
+        .tech-card:hover {
+            border-color: var(--verde-claro);
+            box-shadow: 0 4px 20px rgba(27,94,32,0.08);
+        }
+        .tech-card-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .tech-dot {
+            width: 10px; height: 10px;
             border-radius: 50%;
             background: var(--acento-verde);
-            animation: blink 1.8s ease-in-out infinite;
+            flex-shrink: 0;
         }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        /* Título y descripción */
-        .nolist-title {
-            font-size: 1.9rem;
-            font-weight: 800;
+        .tech-name {
+            font-size: 0.95rem;
+            font-weight: 700;
             color: var(--gris-oscuro);
-            letter-spacing: -1px;
-            margin-bottom: 16px;
         }
-        .nolist-desc {
-            font-size: 0.97rem;
+        .tech-desc {
+            font-size: 0.85rem;
             color: var(--gris-medio);
-            max-width: 440px;
-            line-height: 1.75;
-            margin-bottom: 40px;
+            line-height: 1.55;
         }
 
-        /* Bloque de info contextual */
-        .nolist-info {
+        /* ===== EQUIPO ===== */
+        .equipo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .equipo-card {
             background: var(--gris-muy-claro);
             border: 1px solid var(--gris-claro);
-            border-radius: 14px;
-            padding: 24px 28px;
-            max-width: 480px;
-            width: 100%;
-            margin-bottom: 36px;
-            text-align: left;
-        }
-        .nolist-info-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--gris-claro);
-        }
-        .nolist-info-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .nolist-info-row:first-child { padding-top: 0; }
-        .nolist-info-icon {
-            font-size: 1.1rem;
-            flex-shrink: 0;
-            width: 28px;
+            border-radius: 12px;
+            padding: 24px;
             text-align: center;
         }
-        .nolist-info-text {
-            font-size: 0.88rem;
-            color: var(--gris-oscuro);
-            line-height: 1.5;
+        .equipo-avatar {
+            width: 56px; height: 56px;
+            background: var(--verde-muy-claro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
         }
-        .nolist-info-text strong {
-            color: var(--verde-principal);
+        .equipo-avatar svg {
+            width: 28px; height: 28px;
+            fill: var(--verde-principal);
+        }
+        .equipo-nombre {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--gris-oscuro);
+            margin-bottom: 4px;
+        }
+        .equipo-rol {
+            font-size: 0.8rem;
+            color: var(--gris-medio);
+            font-weight: 500;
         }
 
-        /* Barra de progreso decorativa */
-        .progress-wrap {
-            max-width: 480px;
-            width: 100%;
-            margin-bottom: 40px;
-            text-align: left;
-        }
-        .progress-label {
+        /* ===== OBSERVACIONES ===== */
+        .obs-list {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .obs-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 20px;
+            background: var(--gris-muy-claro);
+            border: 1px solid var(--gris-claro);
+            border-radius: 10px;
+        }
+        .obs-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .obs-text {
+            font-size: 0.9rem;
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+        }
+
+        /* ===== CTA VOLVER ===== */
+        .cta-section {
+            padding: 64px 24px;
+            text-align: center;
+            background: var(--gris-muy-claro);
+        }
+        .cta-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--verde-principal);
             margin-bottom: 8px;
         }
-        .progress-text {
-            font-size: 0.78rem;
-            font-weight: 700;
+        .cta-desc {
+            font-size: 0.95rem;
             color: var(--gris-medio);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-bottom: 24px;
         }
-        .progress-pct {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--acento-verde);
-        }
-        .progress-bar-bg {
-            height: 6px;
-            background: var(--gris-claro);
-            border-radius: 99px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--verde-claro), var(--acento-verde));
-            border-radius: 99px;
-            width: 0;
-            animation: fill-bar 2s ease-out 0.5s forwards;
-        }
-        @keyframes fill-bar {
-            to { width: var(--target-width, 30%); }
-        }
-
-        /* Botones */
-        .nolist-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .btn-primary {
+        .cta-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 13px 28px;
+            padding: 14px 32px;
             background: var(--verde-principal);
             color: var(--blanco);
             text-decoration: none;
             border-radius: 10px;
-            font-size: 0.92rem;
+            font-size: 0.95rem;
             font-weight: 600;
             transition: all 0.25s ease;
             box-shadow: 0 4px 16px rgba(27,94,32,0.25);
         }
-        .btn-primary:hover {
+        .cta-btn:hover {
             background: var(--verde-oscuro);
             transform: translateY(-2px);
             box-shadow: 0 6px 24px rgba(27,94,32,0.35);
         }
-        .btn-primary svg { width: 18px; height: 18px; fill: currentColor; }
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 13px 28px;
-            background: transparent;
-            color: var(--verde-principal);
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 0.92rem;
-            font-weight: 600;
-            border: 1.5px solid var(--gris-claro);
-            transition: all 0.2s ease;
-        }
-        .btn-secondary:hover {
-            border-color: var(--verde-claro);
-            background: var(--verde-muy-claro);
-        }
-        .btn-secondary svg { width: 18px; height: 18px; fill: currentColor; }
+        .cta-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-        
         /* ===== PIE ===== */
         .footer {
             background: var(--negro-suave);
             padding: 48px 24px 32px;
             color: var(--gris-claro);
         }
-
-        .footer-content {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
+        .footer-content { max-width: 900px; margin: 0 auto; }
         .footer-main {
             display: flex;
             align-items: center;
@@ -289,7 +479,6 @@
             flex-wrap: wrap;
             gap: 24px;
         }
-
         .footer-about-link {
             font-size: 1.1rem;
             font-weight: 600;
@@ -297,135 +486,358 @@
             text-decoration: none;
             transition: color 0.2s;
         }
-
         .footer-about-link:hover {
             color: var(--verde-suave);
         }
-
         .footer-brand {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             gap: 6px;
         }
-
         .footer-brand-top {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .footer-logo-icon {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             background: var(--verde-principal);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
-        .footer-logo-icon svg {
-            width: 20px;
-            height: 20px;
-        }
-
+        .footer-logo-icon svg { width: 20px; height: 20px; }
         .footer-logo-text {
             font-size: 1rem;
             font-weight: 700;
             color: var(--blanco);
         }
-
         .footer-year {
             font-size: 0.85rem;
             color: var(--gris-medio);
             text-align: right;
         }
-
         .footer-divider {
             height: 1px;
             background: rgba(255,255,255,0.1);
             margin: 24px 0;
         }
 
-        @media (max-width: 480px) {
-            .nolist-title { font-size: 1.5rem; }
-            .nolist-actions { flex-direction: column; align-items: center; }
-            .footer-main {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .footer-brand {
-                align-items: center;
-            }
-
-            .footer-year {
-                text-align: center;
-            }
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .header { padding: 60px 20px 48px; }
+            .header h1 { font-size: 2rem; }
+            .back-link { display: none; }
+            .section { padding: 40px 0; }
+            .ficha-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: 1fr; }
+            .equipo-grid { grid-template-columns: 1fr 1fr; }
+            .footer-main { flex-direction: column; align-items: center; text-align: center; }
+            .footer-brand { align-items: center; }
+            .footer-year { text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== BARRA SUPERIOR ===== -->
-    <div class="topbar">
-        <a href="/python-iedp/index.html" class="topbar-logo" target="_self">
-            <div class="topbar-icon">
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="33" cy="9" rx="9" ry="7" fill="#1B5E20" transform="rotate(-12 33 9)"/>
-                    <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
-                          stroke="#1B5E20" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                </svg>
+    <!-- ===== CABEZA ===== -->
+    <header class="header">
+
+        <div class="header-top-bar">
+            <a href="/python-iedp/index.html" class="header-logo-small" target="_self">
+                <div class="header-logo-icon">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="33" cy="9" rx="9" ry="7" fill="#1B5E20" transform="rotate(-12 33 9)"/>
+                        <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                              stroke="#1B5E20" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+                <span class="header-logo-label"></span>
+            </a>
+        </div>
+
+        <h1>Fundamentos de Programación en Python Aplicada</h1>
+        <p class="header-subtitle">Institución Etnoeducativa de Pontezuela</p>
+
+    </header>
+
+    <main class="container">
+
+        <!-- ===== DESCRIPCION ===== -->
+        <section class="section">
+            <h2 class="section-title">Descripción del espacio formativo</h2>
+            <p class="description-text">
+                Este espacio de formación introduce a los estudiantes en el pensamiento lógico y la programación desde cero, usando el lenguaje Python. Su diseño está basado en la idea de dar tutorías a alumnos tanto sin conocimientos previos como a los que sí tienen, a través de talleres prácticos e independientes.
+            </p>
+            <p class="description-text" style="margin-top:16px;">
+                El enfoque es completamente práctico, acorde con las necesidades de la institución. No se plantea como un curso tradicional, sino como una experiencia de aprendizaje paso a paso: cada sesión termina con un programa funcional y un reto superado. Los ejes de evaluación son la participación, las actividades dentro de clase y el desarrollo de un código final por bloque de aprendizaje completado.
+            </p>
+        </section>
+
+        <!-- ===== FICHA TECNICA ===== -->
+        <section class="section">
+            <h2 class="section-title">Información del espacio</h2>
+            <div class="ficha-grid">
+                <div class="ficha-item">
+                    <div class="ficha-label">Nombre</div>
+                    <div class="ficha-value">Fundamentos de Programación en Python Aplicada</div>
+                </div>
+                <div class="ficha-item">
+                    <div class="ficha-label">Área de apoyo</div>
+                    <div class="ficha-value">Informática / Programación</div>
+                </div>
+                <div class="ficha-item">
+                    <div class="ficha-label">Población objetivo</div>
+                    <div class="ficha-value">Estudiantes de secundaria, grados 9° a 11°</div>
+                </div>
+                <div class="ficha-item">
+                    <div class="ficha-label">Modalidad</div>
+                    <div class="ficha-value">Presencial</div>
+                </div>
+                <div class="ficha-item">
+                    <div class="ficha-label">Frecuencia</div>
+                    <div class="ficha-value">1 sesión semanal</div>
+                </div>
+                <div class="ficha-item">
+                    <div class="ficha-label">Duración por sesión</div>
+                    <div class="ficha-value">1 hora</div>
+                </div>
+                <div class="ficha-item">
+                    <div class="ficha-label">Inicio tentativo</div>
+                    <div class="ficha-value">Viernes 8 de mayo de 2026, 1:00 p.m.</div>
+                </div>
+                <div class="ficha-item">
+                    <div class="ficha-label">Total de sesiones</div>
+                    <div class="ficha-value">11 sesiones (etapas progresivas)</div>
+                </div>
             </div>
-            <span class="topbar-label">Python Pontezuela</span>
+        </section>
+
+        <!-- ===== OBJETIVO GENERAL ===== -->
+        <section class="section">
+            <h2 class="section-title">Objetivo general</h2>
+            <div class="objetivo-block">
+                <p class="objetivo-text">
+                    Desarrollar en los estudiantes habilidades básicas y progresivas de pensamiento lógico y programación en Python, permitiéndoles comprender, crear y aplicar soluciones sencillas a problemas reales, en un entorno accesible.
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== OBJETIVOS ESPECIFICOS ===== -->
+        <section class="section">
+            <h2 class="section-title">Objetivos específicos</h2>
+            <div class="objetivos-list">
+                <div class="objetivo-item">
+                    <div class="objetivo-num">01</div>
+                    <p class="objetivo-desc">Comprender los fundamentos del pensamiento algorítmico mediante teoría y dinámicas desenchufadas antes de escribir código.</p>
+                </div>
+                <div class="objetivo-item">
+                    <div class="objetivo-num">02</div>
+                    <p class="objetivo-desc">Utilizar Python para resolver problemas básicos de cálculo, almacenamiento de datos y toma de decisiones.</p>
+                </div>
+                <div class="objetivo-item">
+                    <div class="objetivo-num">03</div>
+                    <p class="objetivo-desc">Desarrollar habilidades de análisis y lógica computacional a través de la depuración y mejora de programas.</p>
+                </div>
+                <div class="objetivo-item">
+                    <div class="objetivo-num">04</div>
+                    <p class="objetivo-desc">Crear programas simples y funcionales desde las primeras sesiones, garantizando la motivación y la confianza del estudiante.</p>
+                </div>
+                <div class="objetivo-item">
+                    <div class="objetivo-num">05</div>
+                    <p class="objetivo-desc">Fomentar el aprendizaje autónomo y la experimentación, promoviendo la modificación creativa de los ejercicios propuestos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== METODOLOGIA ===== -->
+        <section class="section">
+            <h2 class="section-title">Metodología</h2>
+            <div class="metodo-list">
+                <div class="metodo-item">
+                    <div class="metodo-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    </div>
+                    <div class="metodo-content">
+                        <p class="metodo-titulo">Presentación del tema</p>
+                        <p class="metodo-desc">El tutor encargado muestra el tema y menciona de forma sustancial en qué consiste y cómo es aplicable al contexto real.</p>
+                    </div>
+                </div>
+                <div class="metodo-item">
+                    <div class="metodo-icon">
+                        <svg viewBox="0 0 24 24"><path d="M11.5 2C6.81 2 3 5.81 3 10.5S6.81 19 11.5 19h.5v3c4.86-2.34 8-7 8-11.5C20 5.81 16.19 2 11.5 2zm1 14.5h-2v-2h2v2zm0-4h-2c0-3.25 3-3 3-5 0-1.1-.9-2-2-2s-2 .9-2 2h-2c0-2.21 1.79-4 4-4s4 1.79 4 4c0 2.5-3 2.75-3 5z"/></svg>
+                    </div>
+                    <div class="metodo-content">
+                        <p class="metodo-titulo">Desafío del día</p>
+                        <p class="metodo-desc">Se plantea un problema concreto, cercano a la realidad local (como "¿cómo podemos contar las semillas de un cultivo y guardar el dato?"), que demanda el concepto nuevo.</p>
+                    </div>
+                </div>
+                <div class="metodo-item">
+                    <div class="metodo-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                    </div>
+                    <div class="metodo-content">
+                        <p class="metodo-titulo">Resolución del problema</p>
+                        <p class="metodo-desc">El tutor escribe código proyectado, explica cada línea y genera discusión. Los estudiantes observan, preguntan y proponen variaciones.</p>
+                    </div>
+                </div>
+                <div class="metodo-item">
+                    <div class="metodo-icon">
+                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    </div>
+                    <div class="metodo-content">
+                        <p class="metodo-titulo">Práctica guiada con participación</p>
+                        <p class="metodo-desc">Los estudiantes reproducen un ejercicio base y luego lo modifican con ideas personales. El tutor rota entre los puestos ofreciendo acompañamiento individual.</p>
+                    </div>
+                </div>
+                <div class="metodo-item">
+                    <div class="metodo-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="metodo-content">
+                        <p class="metodo-titulo">Cierre y conexión</p>
+                        <p class="metodo-desc">Reflexión grupal, socialización sobre lo aprendido y explicitación de cómo ese concepto se puede aplicar a un entorno real. Los errores son bienvenidos: se enseña a leerlos y corregirlos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== RESULTADOS DE APRENDIZAJE ===== -->
+        <section class="section">
+            <h2 class="section-title">Resultados de aprendizaje</h2>
+            <div class="ra-list">
+                <div class="ra-item">
+                    <span class="ra-tag">RA1</span>
+                    <p class="ra-desc">Explicar qué es un algoritmo y representar procesos cotidianos mediante pasos ordenados o diagramas simples.</p>
+                </div>
+                <div class="ra-item">
+                    <span class="ra-tag">RA2</span>
+                    <p class="ra-desc">Escribir programas en Python que utilicen variables, entrada/salida por consola y estructuras de decisión (if/elif/else).</p>
+                </div>
+                <div class="ra-item">
+                    <span class="ra-tag">RA3</span>
+                    <p class="ra-desc">Automatizar tareas repetitivas con bucles (while, for) y almacenar colecciones de datos en listas.</p>
+                </div>
+                <div class="ra-item">
+                    <span class="ra-tag">RA4</span>
+                    <p class="ra-desc">Construir funciones reutilizables para modularizar el código, facilitando su lectura y mantenimiento.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ENTORNO TECNOLOGICO ===== -->
+        <section class="section">
+            <h2 class="section-title">Entorno tecnológico</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-card-head">
+                        <div class="tech-dot"></div>
+                        <span class="tech-name">Python 3.14</span>
+                    </div>
+                    <p class="tech-desc">Lenguaje principal del taller. Instalación básica; versión portable disponible si no se permite instalar en el equipo.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-card-head">
+                        <div class="tech-dot"></div>
+                        <span class="tech-name">Thonny IDE</span>
+                    </div>
+                    <p class="tech-desc">Editor ligero de bajo consumo de recursos, interfaz simplificada, depuración visual paso a paso y Python integrado. Recomendado como entorno único para todo el taller.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-card-head">
+                        <div class="tech-dot"></div>
+                        <span class="tech-name">IDLE</span>
+                    </div>
+                    <p class="tech-desc">Alternativa aún más ligera para equipos muy limitados. Incluido con Python sin instalación adicional.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-card-head">
+                        <div class="tech-dot"></div>
+                        <span class="tech-name">OnlineGDB</span>
+                    </div>
+                    <p class="tech-desc">Compilador en línea gratuito para casos donde no sea posible instalar aplicaciones en los dispositivos de la institución.</p>
+                </div>
+            </div>
+
+            <div style="margin-top:20px; padding:18px 22px; background:var(--verde-muy-claro); border:1px solid var(--verde-suave); border-radius:10px;">
+                <p style="font-size:0.85rem; color:var(--verde-oscuro); font-weight:500; line-height:1.6;">
+                    <strong>Requisitos mínimos del equipo:</strong> <br>Windows 10 o superior<br>RAM: 1–2 GB<br>Procesador: Intel Atom / Celeron o equivalente<br>Espacio en disco: 500 MB.
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== EQUIPO ===== -->
+        <section class="section">
+            <h2 class="section-title">Quiénes estamos detrás</h2>
+            <div class="equipo-grid">
+                <div class="equipo-card">
+                    <div class="equipo-avatar">
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                    </div>
+                    <p class="equipo-nombre">Marxi Reyes Torres</p>
+                    <p class="equipo-rol">Docente facilitadora · Egresada</p>
+                </div>
+                <div class="equipo-card">
+                    <div class="equipo-avatar">
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                    </div>
+                    <p class="equipo-nombre">Diego Ramos</p>
+                    <p class="equipo-rol">Tutor encargado</p>
+                </div>
+                <div class="equipo-card">
+                    <div class="equipo-avatar">
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                    </div>
+                    <p class="equipo-nombre">Alexander Durango</p>
+                    <p class="equipo-rol">Tutor encargado</p>
+                </div>
+                <div class="equipo-card" style="background:var(--blanco);">
+                    <div class="equipo-avatar" style="background:var(--gris-claro);">
+                        <svg viewBox="0 0 24 24" style="fill:var(--gris-medio);"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    </div>
+                    <p class="equipo-nombre">Institución Etnoeducativa de Pontezuela</p>
+                    <p class="equipo-rol">Institución sede · Córdoba, Colombia</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== CTA VOLVER ===== -->
+    <section class="cta-section">
+        <p class="cta-title">¿Listo para empezar?</p>
+        <p class="cta-desc">Accede a las sesiones del taller desde la página principal.</p>
+        <a href="/python-iedp/index.html" class="cta-btn" target="_self">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            Ir al inicio
         </a>
-    </div>
+    </section>
 
-    <!-- ===== CONTENIDO ===== -->
-    <div class="nolist-page">
-
-        <!-- Ícono animado -->
-        <div class="nolist-icon-wrap">
-            <div class="nolist-icon-bg">
-                <svg viewBox="0 0 24 24">
-                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
-                </svg>
-            </div>
-        </div>
-
-        <h1 class="nolist-title">Esta sesión aún no está lista</h1>
-        <p class="nolist-desc">
-            Esta parte del taller existe y está planificada, pero todavía no se ha publicado. Cuando se imparta, aparecerá aquí.
-        </p>
-
-        <!-- Acciones -->
-        <div class="nolist-actions">
-            <a href="/python-iedp/index.html" class="btn-primary" target="_self">
-                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                Ir a inicio
-            </a>
-            <a href="/python-iedp/instalacion.html" class="btn-secondary" target="_self">
-                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                Instalar herramientas
-            </a>
-        </div>
-
-    </div>
-    
     <!-- ===== PIE ===== -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-main">
-                <a href="/python-iedp/acerca.html" class="footer-about-link" target="_self">Acerca de</a>
+                <a href="/python-iedp/acerca.html" class="footer-about-link">Acerca de</a>
                 <div class="footer-brand">
                     <div class="footer-brand-top">
                         <div class="footer-logo-icon">
                             <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Cabeza prominente en la parte superior -->
                                 <ellipse cx="33" cy="9" rx="9" ry="7" fill="white" transform="rotate(-12 33 9)"/>
-                                <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
-                                      stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                <!-- Cuerpo en S descendente, cola abajo -->
+                                <path d="M32 16
+                                         C29 19, 20 23, 18 29
+                                         C16 35, 23 39, 31 41
+                                         C39 43, 45 47, 45 53
+                                         C45 58, 39 61, 34 59
+                                         C31 57, 30 54, 32 51"
+                                      stroke="white"
+                                      stroke-width="9"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      fill="none"/>
                             </svg>
                         </div>
                         <span class="footer-logo-text">Python Pontezuela</span>
