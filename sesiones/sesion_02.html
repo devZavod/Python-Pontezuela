@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesion 2 — Hola Python — Python Pontezuela</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde-principal: #1B5E20;
+            --verde-oscuro: #0D3B10;
+            --verde-claro: #2E7D32;
+            --verde-muy-claro: #E8F5E9;
+            --verde-suave: #C8E6C9;
+            --blanco: #FFFFFF;
+            --gris-muy-claro: #F8FAF8;
+            --gris-claro: #E8EDE8;
+            --gris-medio: #6B7B6B;
+            --gris-oscuro: #2D3B2D;
+            --negro-suave: #1A1F1A;
+            --acento-verde: #43A047;
+            --naranja: #E65100;
+            --naranja-claro: #FFF3E0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--negro-suave);
+            background-color: var(--blanco);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        code, .mono {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.88em;
+            background: var(--gris-claro);
+            color: var(--verde-principal);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-oscuro) 100%);
+            padding: 80px 24px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(67,160,71,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%; left: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(67,160,71,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header-top-bar {
+            position: absolute;
+            top: 24px; left: 24px;
+            z-index: 2;
+        }
+        .header-logo-small {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .header-logo-icon {
+            width: 36px; height: 36px;
+            background: var(--blanco);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .header-logo-icon svg { width: 24px; height: 24px; }
+        .header-logo-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+        }
+        .back-link {
+            position: absolute;
+            top: 24px; right: 24px;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--blanco); }
+        .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+        .header-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.9);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 99px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--blanco);
+            letter-spacing: -1.5px;
+            position: relative;
+            z-index: 1;
+        }
+        .header-subtitle {
+            font-size: 1.05rem;
+            color: var(--verde-suave);
+            font-weight: 500;
+            margin-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 56px 0;
+            border-bottom: 1px solid var(--gris-claro);
+        }
+        .section:last-of-type { border-bottom: none; }
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--acento-verde);
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 28px;
+            letter-spacing: -0.5px;
+        }
+
+        .lead {
+            font-size: 1.05rem;
+            color: var(--gris-oscuro);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .body-text {
+            font-size: 0.95rem;
+            color: var(--gris-oscuro);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .body-text strong {
+            color: var(--verde-principal);
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: var(--verde-muy-claro);
+            border-left: 4px solid var(--verde-principal);
+            border-radius: 0 10px 10px 0;
+            padding: 20px 24px;
+            margin: 24px 0;
+        }
+        .highlight-box p {
+            font-size: 0.95rem;
+            color: var(--verde-oscuro);
+            line-height: 1.65;
+        }
+        .highlight-box p + p { margin-top: 10px; }
+
+        .example-card {
+            background: var(--gris-muy-claro);
+            border: 1px solid var(--gris-claro);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+        .example-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .example-card ol, .example-card ul {
+            margin-left: 18px;
+            font-size: 0.92rem;
+            color: var(--gris-oscuro);
+            line-height: 1.7;
+        }
+        .example-card li + li { margin-top: 6px; }
+
+        .steps-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 24px 0;
+        }
+        .flow-step {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gris-claro);
+            position: relative;
+        }
+        .flow-step:last-child { border-bottom: none; }
+        .flow-step-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            flex-shrink: 0;
+        }
+        .flow-num {
+            width: 36px; height: 36px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+        .flow-line {
+            width: 2px;
+            flex: 1;
+            background: var(--gris-claro);
+            margin-top: 8px;
+        }
+        .flow-step:last-child .flow-line { display: none; }
+        .flow-content {
+            flex: 1;
+            padding-top: 6px;
+        }
+        .flow-content p {
+            font-size: 0.93rem;
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+        }
+
+        .tip-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: var(--verde-muy-claro);
+            border: 1px solid var(--verde-suave);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+        .tip-box-text {
+            font-size: 0.88rem;
+            color: var(--verde-oscuro);
+            line-height: 1.55;
+        }
+
+        .note-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: var(--naranja-claro);
+            border: 1px solid #FFCC80;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+        .note-box-text {
+            font-size: 0.88rem;
+            color: #4E342E;
+            line-height: 1.55;
+        }
+
+        /* ===== BLOQUES DE CÓDIGO (adaptados de sesión 02) ===== */
+        .code-block {
+            background: var(--negro-suave);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .code-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--acento-verde);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+        .code-block pre {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.87rem;
+            color: #A5D6A7;
+            white-space: pre;
+            line-height: 1.8;
+        }
+        .c-comment { color: #6e98ac; }
+        .c-keyword { color: #80CBC4; }
+        .c-string { color: #FFE082; }
+        .c-prompt { color: #546E7A; }
+        .c-output { color: #CFD8DC; }
+        .c-fn { color: #A5D6A7; }
+
+        /* ===== COMPARATIVA DOS COLUMNAS ===== */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .compare-col {
+            background: var(--gris-muy-claro);
+            border: 1px solid var(--gris-claro);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .compare-col-title {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 12px;
+        }
+        .compare-col-body {
+            font-size: 0.87rem;
+            color: var(--gris-oscuro);
+            line-height: 1.65;
+        }
+
+        /* ===== REGLAS DE SINTAXIS ===== */
+        .rule-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--gris-oscuro);
+            line-height: 1.55;
+        }
+        .rule-item::before {
+            content: '';
+            width: 6px; height: 6px;
+            background: var(--acento-verde);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 7px;
+        }
+
+        .cta-section {
+            padding: 64px 24px;
+            text-align: center;
+            background: var(--gris-muy-claro);
+        }
+        .cta-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 8px;
+        }
+        .cta-desc {
+            font-size: 0.95rem;
+            color: var(--gris-medio);
+            margin-bottom: 24px;
+        }
+        .cta-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 16px rgba(27,94,32,0.25);
+        }
+        .cta-btn:hover {
+            background: var(--verde-oscuro);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(27,94,32,0.35);
+        }
+        .cta-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .cta-btn-sec {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: transparent;
+            color: var(--verde-principal);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 1.5px solid var(--gris-claro);
+            transition: all 0.2s ease;
+        }
+        .cta-btn-sec:hover {
+            border-color: var(--verde-claro);
+            background: var(--verde-muy-claro);
+        }
+        .cta-btn-sec svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .footer {
+            background: var(--negro-suave);
+            padding: 48px 24px 32px;
+            color: var(--gris-claro);
+        }
+        .footer-content { max-width: 900px; margin: 0 auto; }
+        .footer-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .footer-about-link {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--blanco);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-about-link:hover { color: var(--verde-suave); }
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+        .footer-brand-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-logo-icon {
+            width: 32px; height: 32px;
+            background: var(--verde-principal);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer-logo-icon svg { width: 20px; height: 20px; }
+        .footer-logo-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--blanco);
+        }
+        .footer-year {
+            font-size: 0.85rem;
+            color: var(--gris-medio);
+        }
+
+        /* ===== BARRA RÁPIDA (de sesión 02, adaptada) ===== */
+        .quick-info {
+            background: var(--verde-muy-claro);
+            border-bottom: 1px solid var(--verde-suave);
+            padding: 16px 24px;
+        }
+        .quick-info-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .quick-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--blanco);
+            border: 1px solid var(--verde-suave);
+            border-radius: 99px;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--verde-principal);
+        }
+        .quick-tag svg { width: 14px; height: 14px; fill: var(--acento-verde); }
+
+        @media (max-width: 640px) {
+            .header { padding: 60px 20px 48px; }
+            .header h1 { font-size: 1.8rem; }
+            .back-link { display: none; }
+            .section { padding: 40px 0; }
+            .compare-grid { grid-template-columns: 1fr; }
+            .cta-actions { flex-direction: column; align-items: center; }
+            .footer-main { flex-direction: column; align-items: center; }
+            .footer-brand { align-items: center; }
+            .footer-year { text-align: center; }
+        }
+    </style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-top-bar">
+            <a href="../index.html" class="header-logo-small" target="_self">
+                <div class="header-logo-icon">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="33" cy="9" rx="9" ry="7" fill="#1B5E20" transform="rotate(-12 33 9)"/>
+                        <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                              stroke="#1B5E20" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+                <span class="header-logo-label"></span>
+            </a>
+        </div>
+
+        <h1>Hola Python</h1>
+        <p class="header-subtitle">Primeras instrucciones: print() y la consola de Thonny</p>
+    </header>
+    <main class="container">
+
+        <!-- ===== ¿QUÉ ES PYTHON? ===== -->
+        <section class="section">
+            <h2 class="section-title">¿Qué es Python?</h2>
+
+            <p class="body-text">
+                Python es un lenguaje de programación de propósito general creado por Guido van Rossum y publicado en 1991. Su nombre no viene de la serpiente: Van Rossum era fanatico del grupo de comedia británico Monty Python y queria que el nombre del lenguaje fuera corto, memorable y un poco irreverente. La serpiente aparecio despues, cuando el proyecto necesitaba un logo.
+            </p>
+            <p class="body-text">
+                Python es un lenguaje interpretado: en lugar de compilar el procesar completo antes de ejecutarlo, el interprete lee y ejecuta cada instrucción de forma secuencial. Esto significa que si hay un error en la línea 5, las líneas 1 a 4 ya se habrán ejecutado y el error aparece en el momento exacto en que se intenta procesar la instrucción problematica. Para aprender, esta característica es una ventaja: el resultado de cada cambio se ve de inmediato.
+            </p>
+
+            <div class="highlight-box">
+                <p><strong>Para tener en mente:</strong> Python es actualmente uno de los lenguajes más utilizados en el mundo, presente en análisis de datos, inteligencia artificial, desarrollo web, automatización y educación. Su sintaxis esta disenada para ser cercana al ingles natural, lo que reduce la distancia entre lo que se quiere expresar y lo que hay que escribir.</p>
+            </div>
+
+            <p class="body-text">
+                Su popularidad como primer lenguaje de programación se debe a tres razones principales. Primero, requiere muy poco código para hacer cosas funcionales: un programa completo puede ser de una sola línea. Segundo, la sintaxis castiga la confusión, lo que obliga a escribir codigo claro y legible desde el principio. Tercero, su comunidad es enorme y la documentación oficial esta disponible en español.
+            </p>
+        </section>
+
+        <!-- ===== EL ENTORNO THONNY ===== -->
+        <section class="section">
+            <h2 class="section-title">Thonny: editor y consola</h2>
+
+            <p class="body-text">
+                Thonny es un entorno de desarrollo integrado (IDE) disenado especificamente para aprender Python. Incluye Python en la instalación, funciona en equipos con pocos recursos y ofrece un depurador visual que permite ejecutar el código paso a paso y ver el estado de cada variable en tiempo real. Para este taller es la herramienta principal.
+            </p>
+            <p class="body-text">
+                Al abrir Thonny, la ventana se divide en dos zonas fundamentales:
+            </p>
+
+            <div class="compare-grid">
+                <div class="compare-col">
+                    <p class="compare-col-title">Editor (parte superior)</p>
+                    <p class="compare-col-body">Aquí se escribe el programa completo. El código no se ejecuta hasta que se presiona el boton verde Run (o la tecla F5). Es el espacio de trabajo principal para escribir, guardar y organizar el código.</p>
+                </div>
+                <div class="compare-col">
+                    <p class="compare-col-title">Consola / Shell (parte inferior)</p>
+                    <p class="compare-col-body">La consola acepta instrucciones directas. Todo lo que se escribe se ejecuta al presionar Enter. Es ideal para probar expresiones sueltas, hacer calculos rápidos y ver resultados inmediatos sin necesidad de guardar un archivo.</p>
+                </div>
+            </div>
+
+            <p class="body-text">
+                La distincion entre el editor y la consola es importante desde el principio. El editor produce programas completos que se pueden guardar y reutilizar. La consola es una calculadora interactiva donde cada linea desaparece de la memoria en cuanto se escribe la siguiente. Ambas herramientas tienen su lugar y se complementan.
+            </p>
+
+            <div class="tip-box">
+                <p class="tip-box-text">
+                    <strong>Consejo:</strong> Si no puedes instalar Thonny, la guia de instalación describe como usar <strong>OnlineGDB</strong>, un compilador de Python que funciona directamente en el navegador sin instalar nada. La lógica del editor y la consola es igual.
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== LA CONSOLA COMO CALCULADORA ===== -->
+        <section class="section">
+            <h2 class="section-title">La consola interactiva</h2>
+
+            <p class="body-text">
+                La consola de Thonny muestra el simbolo <code>>>></code> cuando Python esta esperando una instruccion. Cada vez que aparece ese simbolo, se puede escribir cualquier expresion valida y Python devolvera su resultado de inmediato.
+            </p>
+            <p class="body-text">
+                Los operadores aritmeticos basicos funcionan exactamente como en matematicas:
+            </p>
+
+            <div class="code-block">
+                <p class="code-label">Consola interactiva — operaciones basicas</p>
+                <pre><span class="c-prompt">>>></span> <span class="c-output">10 + 5</span>
+<span class="c-output">15</span>
+<span class="c-prompt">>>></span> <span class="c-output">2026 - 2009</span>
+<span class="c-output">17</span>
+<span class="c-prompt">>>></span> <span class="c-output">12 * 4</span>
+<span class="c-output">48</span>
+<span class="c-prompt">>>></span> <span class="c-output">100 / 4</span>
+<span class="c-output">25.0</span></pre>
+            </div>
+
+            <p class="body-text">
+                Observa que la division devuelve <code>25.0</code> en lugar de <code>25</code>. Esto se debe a que Python distingue entre numeros enteros y numeros con decimales, y el operador <code>/</code> siempre produce un numero con decimales. Si se necesita la division entera (sin residuo), se usa el operador <code>//</code>; para el residuo de la division, se usa <code>%</code>.
+            </p>
+
+            <div class="code-block">
+                <p class="code-label">Division entera y residuo</p>
+                <pre><span class="c-prompt">>>></span> <span class="c-output">17 // 5</span>
+<span class="c-output">3</span>
+<span class="c-prompt">>>></span> <span class="c-output">17 % 5</span>
+<span class="c-output">2</span>
+<span class="c-comment">  17 = 5 x 3 + 2</span></pre>
+            </div>
+
+            <p class="body-text">
+                La consola es util para verificar rapidamente una expresion antes de incorporarla a un programa mas grande. No es, sin embargo, el lugar donde se escriben programas completos: para eso existe el editor.
+            </p>
+        </section>
+
+        <!-- ===== COMENTARIOS ===== -->
+        <section class="section">
+            <h2 class="section-title">Comentarios en Python</h2>
+
+            <p class="body-text">
+                Un comentario es una nota escrita dentro del código para que los humanos entiendan qué está pasando. Python ignora completamente todo lo que aparezca a la derecha del símbolo <code>#</code> en una línea. No se ejecuta, no produce errores y no afecta el comportamiento del programa.
+            </p>
+
+            <div class="code-block">
+                <p class="code-label">Formas de usar comentarios</p>
+                <pre><span class="c-comment"># Comentario en una linea dedicada</span>
+<span class="c-fn">print</span>(<span class="c-string">"Hola"</span>)
+
+<span class="c-fn">print</span>(<span class="c-string">"Hola"</span>)   <span class="c-comment"># Comentario al final de una instruccion</span>
+
+<span class="c-comment"># Varias líneas comentadas</span>
+<span class="c-comment"># se escriben con un # al inicio</span>
+<span class="c-comment"># de cada línea</span></pre>
+            </div>
+
+            <p class="body-text">
+                Los comentarios cumplen dos funciones. Durante el aprendizaje, sirven para anotar que hace cada parte del código, lo que facilita recordarlo y revisarlo después. En proyectos reales, ayudan a otras personas que lean el código (o a uno mismo tiempo después) a entender la lógica sin tener que descifrarla desde cero.
+            </p>
+
+            <p class="body-text">
+                Una convención común es incluir al inicio de cada archivo el nombre del programa, una descripción breve, el autor y la fecha. Esto no es obligatorio para que el código funcione, pero es una práctica de buen programador desde el primer día:
+            </p>
+
+            <div class="code-block">
+                <p class="code-label">Encabezado de un archivo</p>
+                <pre><span class="c-comment"># Mi primer programa en Python</span>
+<span class="c-comment"># Autor: [nombre]</span>
+<span class="c-comment"># Fecha: mayo 2026</span>
+<span class="c-comment"># Descripción: muestra un saludo en pantalla</span>
+
+<span class="c-fn">print</span>(<span class="c-string">"Hola, mundo"</span>)</pre>
+            </div>
+        </section>
+
+        <!-- ===== print() ===== -->
+        <section class="section">
+            <h2 class="section-title">La funcion print()</h2>
+
+            <p class="body-text">
+                <code>print()</code> es la instrucción que le indica a Python que muestre un mensaje en la consola. Es la forma más básica de producir una salida visible: texto en pantalla.
+            </p>
+
+            <div class="highlight-box">
+                <p><strong>Sintaxis:</strong> <code>print( contenido )</code> — el contenido que se quiere mostrar va entre los paréntesis. Si es texto, debe ir entre comillas.</p>
+            </div>
+
+            <p class="body-text">
+                Cada llamada a <code>print()</code> produce una línea nueva en la consola. Si se encadenan varias instrucciones <code>print()</code>, cada una ocupa su propia línea, en el orden en que aparecen en el código:
+            </p>
+
+            <div class="code-block">
+                <p class="code-label">Multiples print()</p>
+                <pre><span class="c-fn">print</span>(<span class="c-string">"Primera linea"</span>)
+<span class="c-fn">print</span>(<span class="c-string">"Segunda linea"</span>)
+<span class="c-fn">print</span>(<span class="c-string">"Tercera linea"</span>)</pre>
+            </div>
+
+            <div class="code-block">
+                <p class="code-label">Salida en consola</p>
+                <pre><span class="c-output">Primera linea</span>
+<span class="c-output">Segunda linea</span>
+<span class="c-output">Tercera linea</span></pre>
+            </div>
+
+            <p class="body-text">
+                Python procesa las instrucciones de arriba hacia abajo, en el orden exacto en que estan escritas. Este orden de ejecucion secuencial es la regla por defecto del lenguaje.
+            </p>
+            <p class="body-text">Las reglas que debe cumplir una instrucción <code>print()</code> válida son pocas pero estrictas:</p>
+            
+            <div class="example-card">
+                <ol>
+                    <li>Los paréntesis son obligatorios, incluso si el mensaje es vacío. <code>print</code> sin paréntesis no produce ninguna salida.</li>
+                    <li>Si el contenido es texto, debe estar entre comillas simples o dobles. Ambas funcionan igual, pero la comilla de apertura y la de cierre deben ser del mismo tipo.</li>
+                    <li><code>print()</code> en Python es sensible a mayusculas: <code>Print()</code> o <code>PRINT()</code> producen un error. Python distingue entre letras mayúsculas y minúsculas en todos sus elementos.</li>
+                </ol>
+            </div>
+
+            <div class="note-box">
+                <p class="note-box-text">
+                    <strong>Sobre los errores:</strong> Los mensajes de error en rojo no son una señal de fracaso; son la forma en que Python explica exactamente que salió mal y en que línea. Aprender a leerlos es parte esencial de programar. La ultima linea del error, la que comienza con el nombre del tipo de error (<code>SyntaxError</code>, <code>NameError</code>, etc.), es la mas informativa.
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== CADENAS DE CARACTERES ===== -->
+        <section class="section">
+            <h2 class="section-title">Cadenas de caracteres</h2>
+
+            <p class="body-text">
+                En programación, cualquier secuencia de texto se denomina <em>cadena de caracteres</em> (en ingles, <em>string</em>). En Python se representa encerrada entre comillas simples o dobles. Python almacena y muestra el texto exactamente como fue escrito, incluyendo espacios, signos de puntuación y mayúsculas.
+            </p>
+
+            <div class="code-block">
+                <p class="code-label">Ejemplos de cadenas</p>
+                <pre><span class="c-string">"Hola, mundo"</span>
+<span class="c-string">'Vivo en Pontezuela'</span>
+<span class="c-string">"La casa de Jorge esta cerca"</span>
+<span class="c-string">"   con espacios al inicio y al final   "</span>
+<span class="c-string">""</span>   <span class="c-comment"># cadena vacia: tambien es valida</span></pre>
+            </div>
+
+            <p class="body-text">
+                El uso de comillas simples o dobles es parecido en la mayoría de los casos. La regla es la consistencia: la comilla con la que se abre una cadena debe ser la misma con la que se cierra. Si se necesita incluir una comilla doble dentro del texto, se puede encerrar la cadena entre comillas simples, y viceversa:
+            </p>
+
+            <div class="code-block">
+                <p class="code-label">Comillas dentro de cadenas</p>
+                <pre><span class="c-fn">print</span>(<span class="c-string">'Dijo "hola" y se fue'</span>)
+<span class="c-fn">print</span>(<span class="c-string">"La semilla mide 1.5 cm"</span>)</pre>
+            </div>
+
+            <div class="code-block">
+                <p class="code-label">Salida</p>
+                <pre><span class="c-output">Dijo "hola" y se fue</span>
+<span class="c-output">La semilla mide 1.5 cm</span>
+                </pre>
+            </div>
+
+            <p class="body-text">
+                Las cadenas son el primer tipo de dato con el que se trabaja en Python. Mas adelante se conoceran los numeros enteros, los numeros con decimales y los valores lógicos (verdadero o falso), cada uno con sus propias operaciones y reglas.
+            </p>
+        </section>
+
+        <!-- ===== PRIMER PROGRAMA ===== -->
+        <section class="section">
+            <h2 class="section-title">Tu primer programa completo</h2>
+
+            <p class="body-text">
+                El siguiente programa reune todo lo visto en esta sesión: un encabezado comentado y varias instrucciones <code>print()</code> que muestran informacion sobre quien lo escribe. Es sencillo, pero cumple todos los requisitos de un programa valido: tiene una estructura clara, produce una salida visible y se puede guardar, modificar y ejecutar en cualquier momento.
+            </p>
+
+            <div class="code-block">
+                <p class="code-label">mi_presentacion.py</p>
+                <pre><span class="c-comment"># Mi primer programa en Python</span>
+<span class="c-comment"># Autor: [tu nombre]</span>
+<span class="c-comment"># Mayo 2026</span>
+
+<span class="c-fn">print</span>(<span class="c-string">"Me llamo [nombre]"</span>)
+<span class="c-fn">print</span>(<span class="c-string">"Vivo en Pontezuela"</span>)
+<span class="c-fn">print</span>(<span class="c-string">"Mi comida favorita es la yuca frita"</span>)
+<span class="c-fn">print</span>(<span class="c-string">"El rio San Jorge esta cerca de mi casa"</span>)</pre>
+            </div>
+
+            <div class="code-block">
+                <p class="code-label">Salida al ejecutar (F5)</p>
+                <pre><span class="c-output">Me llamo [nombre]</span>
+<span class="c-output">Vivo en Pontezuela</span>
+<span class="c-output">Mi comida favorita es la yuca frita</span>
+<span class="c-output">El rio San Jorge esta cerca de mi casa</span></pre>
+            </div>
+
+            <p class="body-text">
+                Para ejecutarlo en Thonny: escribe el codigo en el editor, guarda el archivo con la extension <code>.py</code> (por ejemplo, <code>mi_presentacion.py</code>) y presiona el boton verde "Run" o la tecla F5. La salida aparecera en la consola de la parte inferior.
+            </p>
+            <p class="body-text">
+                Cada <code>print()</code> es una instruccion separada. El programa las ejecuta de arriba hacia abajo, en orden, sin saltarse ninguna. Si se agrega una nueva linea <code>print()</code> o se cambia el texto de una existente, el resultado cambia de inmediato al volver a ejecutar. Esta capacidad de modificar y probar al instante es una de las ventajas de trabajar con un lenguaje interpretado como Python.
+            </p>
+        </section>
+
+    </main>
+
+    <section class="cta-section">
+        <p class="cta-title">Continua en la Sesión 3</p>
+        <p class="cta-desc">En la siguiente sesión aprenderás a almacenar datos en variables y a pedirle información al usuario con <code style="background:var(--gris-claro);color:var(--verde-oscuro);padding:2px 6px;border-radius:4px;">input()</code>.</p>
+        <div class="cta-actions">
+            <a href="sesion_03.html" class="cta-btn" target="_self">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                Ir a la Sesión 3
+            </a>
+            <a href="sesion_01.html" class="cta-btn-sec" target="_self">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                Sesión anterior
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <a href="../acerca.html" class="footer-about-link" target="_self">Acerca de</a>
+                <div class="footer-brand">
+                    <div class="footer-brand-top">
+                        <div class="footer-logo-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <ellipse cx="33" cy="9" rx="9" ry="7" fill="white" transform="rotate(-12 33 9)"/>
+                                <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                                      stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            </svg>
+                        </div>
+                        <span class="footer-logo-text">Python Pontezuela</span>
+                    </div>
+                    <span class="footer-year">2026</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
