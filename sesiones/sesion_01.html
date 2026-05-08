@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesion 1 — Pensamiento Computacional — Python Pontezuela</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde-principal: #1B5E20;
+            --verde-oscuro: #0D3B10;
+            --verde-claro: #2E7D32;
+            --verde-muy-claro: #E8F5E9;
+            --verde-suave: #C8E6C9;
+            --blanco: #FFFFFF;
+            --gris-muy-claro: #F8FAF8;
+            --gris-claro: #E8EDE8;
+            --gris-medio: #6B7B6B;
+            --gris-oscuro: #2D3B2D;
+            --negro-suave: #1A1F1A;
+            --acento-verde: #43A047;
+            --naranja: #E65100;
+            --naranja-claro: #FFF3E0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--negro-suave);
+            background-color: var(--blanco);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        code, .mono {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.88em;
+            background: var(--gris-claro);
+            color: var(--verde-principal);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-oscuro) 100%);
+            padding: 80px 24px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(67,160,71,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%; left: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(67,160,71,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header-top-bar {
+            position: absolute;
+            top: 24px; left: 24px;
+            z-index: 2;
+        }
+        .header-logo-small {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .header-logo-icon {
+            width: 36px; height: 36px;
+            background: var(--blanco);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .header-logo-icon svg { width: 24px; height: 24px; }
+        .header-logo-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+        }
+        .back-link {
+            position: absolute;
+            top: 24px; right: 24px;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--blanco); }
+        .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+        .header-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.9);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 99px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--blanco);
+            letter-spacing: -1.5px;
+            position: relative;
+            z-index: 1;
+        }
+        .header-subtitle {
+            font-size: 1.05rem;
+            color: var(--verde-suave);
+            font-weight: 500;
+            margin-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 56px 0;
+            border-bottom: 1px solid var(--gris-claro);
+        }
+        .section:last-of-type { border-bottom: none; }
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--acento-verde);
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 28px;
+            letter-spacing: -0.5px;
+        }
+
+        .lead {
+            font-size: 1.05rem;
+            color: var(--gris-oscuro);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .body-text {
+            font-size: 0.95rem;
+            color: var(--gris-oscuro);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .body-text strong {
+            color: var(--verde-principal);
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: var(--verde-muy-claro);
+            border-left: 4px solid var(--verde-principal);
+            border-radius: 0 10px 10px 0;
+            padding: 20px 24px;
+            margin: 24px 0;
+        }
+        .highlight-box p {
+            font-size: 0.95rem;
+            color: var(--verde-oscuro);
+            line-height: 1.65;
+        }
+        .highlight-box p + p { margin-top: 10px; }
+
+        .example-card {
+            background: var(--gris-muy-claro);
+            border: 1px solid var(--gris-claro);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+        .example-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .example-card ol, .example-card ul {
+            margin-left: 18px;
+            font-size: 0.92rem;
+            color: var(--gris-oscuro);
+            line-height: 1.7;
+        }
+        .example-card li + li { margin-top: 6px; }
+
+        .steps-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 24px 0;
+        }
+        .flow-step {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gris-claro);
+            position: relative;
+        }
+        .flow-step:last-child { border-bottom: none; }
+        .flow-step-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            flex-shrink: 0;
+        }
+        .flow-num {
+            width: 36px; height: 36px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+        .flow-line {
+            width: 2px;
+            flex: 1;
+            background: var(--gris-claro);
+            margin-top: 8px;
+        }
+        .flow-step:last-child .flow-line { display: none; }
+        .flow-content {
+            flex: 1;
+            padding-top: 6px;
+        }
+        .flow-content p {
+            font-size: 0.93rem;
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+        }
+
+        .tip-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: var(--verde-muy-claro);
+            border: 1px solid var(--verde-suave);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+        .tip-box-text {
+            font-size: 0.88rem;
+            color: var(--verde-oscuro);
+            line-height: 1.55;
+        }
+
+        .note-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: var(--naranja-claro);
+            border: 1px solid #FFCC80;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 16px 0;
+        }
+        .note-box-text {
+            font-size: 0.88rem;
+            color: #4E342E;
+            line-height: 1.55;
+        }
+
+        .cta-section {
+            padding: 64px 24px;
+            text-align: center;
+            background: var(--gris-muy-claro);
+        }
+        .cta-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 8px;
+        }
+        .cta-desc {
+            font-size: 0.95rem;
+            color: var(--gris-medio);
+            margin-bottom: 24px;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--verde-principal);
+            color: var(--blanco);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 16px rgba(27,94,32,0.25);
+        }
+        .cta-btn:hover {
+            background: var(--verde-oscuro);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(27,94,32,0.35);
+        }
+        .cta-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .footer {
+            background: var(--negro-suave);
+            padding: 48px 24px 32px;
+            color: var(--gris-claro);
+        }
+        .footer-content { max-width: 900px; margin: 0 auto; }
+        .footer-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .footer-about-link {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--blanco);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-about-link:hover { color: var(--verde-suave); }
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+        .footer-brand-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-logo-icon {
+            width: 32px; height: 32px;
+            background: var(--verde-principal);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer-logo-icon svg { width: 20px; height: 20px; }
+        .footer-logo-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--blanco);
+        }
+        .footer-year {
+            font-size: 0.85rem;
+            color: var(--gris-medio);
+        }
+
+        @media (max-width: 640px) {
+            .header { padding: 60px 20px 48px; }
+            .header h1 { font-size: 1.8rem; }
+            .back-link { display: none; }
+            .section { padding: 40px 0; }
+            .footer-main { flex-direction: column; align-items: center; }
+            .footer-brand { align-items: center; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-top-bar">
+            <a href="../index.html" class="header-logo-small" target="_self">
+                <div class="header-logo-icon">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="33" cy="9" rx="9" ry="7" fill="#1B5E20" transform="rotate(-12 33 9)"/>
+                        <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                              stroke="#1B5E20" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+                <span class="header-logo-label"></span>
+            </a>
+        </div>
+        <h1>Pensamiento Computacional</h1>
+        <p class="header-subtitle">Aprender a pensar antes de escribir codigo</p>
+    </header>
+
+    <main class="container">
+
+        <section class="section">
+            <p class="body-text">
+                Antes de encender un computador, los programadores aprenden a descomponer problemas en pasos pequeños, ordenados y claros. Esa habilidad se llama pensamiento computacional y es la base de todo lo que construiremos en este taller.
+            </p>
+            <p class="body-text">
+                No se trata de memorizar comandos ni de ser experto en tecnologia. Se trata de organizar ideas de manera logica, como cuando explicas a alguien cómo preparar una comida o cómo sembrar una semilla en el huerto. Si la explicación tiene un orden confuso, el resultado sera confuso. Si es precisa, el resultado sera el esperado.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">¿Qué es un algoritmo?</h2>
+            <p class="body-text">
+                Un algoritmo es simplemente una lista de pasos ordenados que resuelven una tarea. No es necesariamente algo complejo ni algo exclusivo de las computadoras. Cuando sigues la receta para hacer arepas, cuando guias a alguien a ir a un sitio o cuando describes como encender un fogón, estas usando algoritmos.
+            </p>
+            <div class="highlight-box">
+                <p><strong>Definición práctica:</strong> Un algoritmo es una secuencia  de instrucciones claras que, realizadas en orden, llevan a un resultado especifico.</p>
+            </div>
+            <p class="body-text">
+                La diferencia entre una explicación común y un algoritmo es la precisión. Un algoritmo no puede dar por sentado que la persona (o la máquina) que lo ejecuta "ya sabe" lo que se espera. Cada paso debe ser explícito.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">El robot que solo obedece</h2>
+            <p class="body-text">
+                Imagina que tienes frente a ti un robot. Este robot puede caminar, girar, agarrar objetos y dibujar, pero no puede adivinar ni completar pasos que tu olvides mencionar. Si le dices "levántate y camina", el robot no sabrá hacia donde ni cuantos pasos. Si le dices "toma el marcador", no sabrá con que mano ni como sujetarlo.
+            </p>
+            <p class="body-text">
+                Para que el robot cruce el salón, tome un marcador y dibuje un circulo en el tablero, necesitas una secuencia como esta:
+            </p>
+            <div class="example-card">
+                <h4>Algoritmo: Dibujar un circulo en el tablero</h4>
+                <ol>
+                    <li>Levantar el pie derecho.</li>
+                    <li>Avanzar un paso hacia adelante.</li>
+                    <li>Repetir los pasos 1 y 2 diez veces.</li>
+                    <li>Girar noventa grados hacia la derecha.</li>
+                    <li>Avanzar cinco pasos hacia adelante.</li>
+                    <li>Extender la mano derecha hasta el tablero.</li>
+                    <li>Agarrar el marcador azul con los dedos pulgar e indice.</li>
+                    <li>Levantar el marcador del soporte.</li>
+                    <li>Dibujar un círculo de treinta centímetros de diámetro.</li>
+                    <li>Devolver el marcador al soporte.</li>
+                </ol>
+            </div>
+            <div class="note-box">
+                <p class="note-box-text">
+                    <strong>Observación:</strong> Si en el paso 3 hubieras dicho solo "camina hasta el tablero", el robot no sabria cuantos pasos dar. Si en el paso 7 no especificas el color, podria agarrar cualquier marcador. La precision te salva de errores.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Algoritmos en la vida</h2>
+            <p class="body-text">
+                En el campo se trabaja con procedimientos heredados de generación en generación. Muchos de esos procedimientos son algoritmos perfectos: pasos probados, en orden, con resultados predecibles.
+            </p>
+
+            <div class="example-card">
+                <h4>Ejemplo: Sembrar una semilla de yuca</h4>
+                <ol>
+                    <li>Elegir una estaca de yuca sana, de al menos veinte centímetros.</li>
+                    <li>Cavar un hueco de quince centímetros de profundidad en tierra suelta.</li>
+                    <li>Colocar la estaca en posicion vertical, con la parte de los brotes hacia arriba.</li>
+                    <li>Cubrir con tierra sin apretar demasiado.</li>
+                    <li>Regar con un litro de agua alrededor del tallo.</li>
+                    <li>Repetir cada tres días durante la primera semana.</li>
+                </ol>
+            </div>
+
+            <div class="example-card">
+                <h4>Ejemplo: Preparar chicha de maíz</h4>
+                <ol>
+                    <li>Dejar remojar el maíz en agua durante 1 día.</li>
+                    <li>Lavar los granos hasta que el agua salga limpia.</li>
+                    <li>Moler los granos con agua.</li>
+                    <li>Colar la mezcla con un pano limpio.</li>
+                    <li>Agregar panela rallada al gusto.</li>
+                    <li>Servir fría o a temperatura ambiente.</li>
+                </ol>
+            </div>
+
+            <p class="body-text">
+                Si alteras el orden de estos pasos, el resultado cambia. Si omites el remojo, el maíz queda duro. Si no lo cuelas, la textura es arenosa. Los algoritmos cotidianos nos enseñan que el orden y el detalle importan.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">De la logica a Python</h2>
+            <p class="body-text">
+                Cuando escribimos un programa en Python, estamos haciendo exactamente lo mismo que con el robot o con la receta de la chicha: damos instrucciones precisas a una máquina que no interpreta, no complementa y no adivina.
+            </p>
+            <p class="body-text">
+                La unica diferencia es el idioma. En lugar de decir "levanta el pie derecho", escribimos instrucciones en un lenguaje que la computadora entiende. Por ejemplo, para mostrar un mensaje en pantalla usamos:
+            </p>
+            <div class="highlight-box">
+                <p><code>print("Hola")</code></p>
+                <p style="margin-top:8px;">Esta linea es una instruccion exacta: "muestra en pantalla el texto entre comillas". Si olvidas una comilla o un parentesis, Python se detiene y te avisa, igual que el robot se detendría si le faltara una instrucción.</p>
+            </div>
+            <div class="tip-box">
+                <p class="tip-box-text">
+                    <strong>Consejo:</strong> Antes de escribir código, escribe en papel los pasos que tu programa debe seguir. Esa lista de papel es tu algoritmo. Traducirla a Python es solo el segundo paso.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Diagramas de flujo</h2>
+            <p class="body-text">
+                Un diagrama de flujo es una forma de dibujar un algoritmo usando figuras. Cada figura representa una acción y las flechas indican el orden. Es útil porque permite ver el recorrido completo de un vistazo.
+            </p>
+            <div class="example-card">
+                <h4>Simbolos basicos</h4>
+                <ul>
+                    <li><strong>Óvalo:</strong> Inicio o fin del proceso.</li>
+                    <li><strong>Rectángulo:</strong> Una acción o instrucción.</li>
+                    <li><strong>Rombo:</strong> Una decisión (si / no).</li>
+                    <li><strong>Flechas:</strong> Dirección del flujo.</li>
+                </ul>
+            </div>
+            <p class="body-text">
+                No necesitas programas especiales para dibujarlos. Con papel y lápiz puedes representar cualquier proceso: desde cómo llegar al rio hasta cómo decidir si una semilla esta lista para sembrarse.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Retos en papel</h2>
+            <p class="body-text">
+                Antes de pasar a la siguiente sesion, intenta estos ejercicios mentalmente o en una hoja:
+            </p>
+            <div class="example-card">
+                <h4>Reto 1: La ruta a la escuela</h4>
+                <p style="font-size:0.92rem;color:var(--gris-oscuro);line-height:1.6;">
+                    Escribe los pasos exactos para guiar a una persona desde su casa hasta la escuela. No des nada por sentado: indica direcciones, puntos de referencia y distancias aproximadas.
+                </p>
+            </div>
+            <div class="example-card">
+                <h4>Reto 2: Encender el fogón</h4>
+                <p style="font-size:0.92rem;color:var(--gris-oscuro);line-height:1.6;">
+                    Describe paso a paso como encender un fogón de leña para hacer un asado. Incluye que hacer si la leña esta humeda.
+                </p>
+            </div>
+            <div class="example-card">
+                <h4>Reto 3: De algoritmo a dibujo</h4>
+                <p style="font-size:0.92rem;color:var(--gris-oscuro);line-height:1.6;">
+                    Dibuja un diagrama de flujo simple para decidir si hoy necesitas paraguas: mira por la ventana, observa el cielo, decide si esta nublado o soleado, y elige tu respuesta.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <section class="cta-section">
+        <p class="cta-title">¿Listo para escribir tu primer código?</p>
+        <p class="cta-desc">La siguiente sesión introduce Python y el entorno Thonny. No necesitas instalar nada todavia.</p>
+        <a href="sesion-02.html" class="cta-btn" target="_self">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            Ir a la Sesión 2
+        </a>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <a href="../acerca.html" class="footer-about-link" target="_self">Acerca de</a>
+                <div class="footer-brand">
+                    <div class="footer-brand-top">
+                        <div class="footer-logo-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <ellipse cx="33" cy="9" rx="9" ry="7" fill="white" transform="rotate(-12 33 9)"/>
+                                <path d="M32 16 C29 19, 20 23, 18 29 C16 35, 23 39, 31 41 C39 43, 45 47, 45 53 C45 58, 39 61, 34 59 C31 57, 30 54, 32 51"
+                                      stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            </svg>
+                        </div>
+                        <span class="footer-logo-text">Python Pontezuela</span>
+                    </div>
+                    <span class="footer-year">2026</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
